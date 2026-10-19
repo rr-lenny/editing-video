@@ -5,6 +5,7 @@ import {drift, EASE_SOFT, ramp, sec} from '../lib/anim';
 import {FONTS} from '../lib/fonts';
 import {EditorialRule} from './EditorialRule';
 import {glowShadow} from './GlowText';
+import {InkText} from './InkText';
 import {MicroCaption} from './MicroCaption';
 
 /* Interlettrage : serré en grande taille, normal en petite taille. */
@@ -26,6 +27,8 @@ const fontFor = (w: WordSpec): React.CSSProperties => {
       return {fontFamily: FONTS.serif, fontWeight: 500, fontStyle: 'italic'};
     case 'link':
       return {fontFamily: FONTS.serif, fontWeight: 400, fontStyle: 'italic'};
+    case 'ink':
+      return {fontFamily: FONTS.sans, fontWeight: 800, fontStyle: 'normal'};
   }
 };
 
@@ -42,6 +45,21 @@ interface WordProps {
 
 const Word: React.FC<WordProps> = ({w, start, exitAt, exitDur}) => {
   const frame = useCurrentFrame();
+  if (w.role === 'ink') {
+    return (
+      <InkText
+        text={w.text}
+        size={w.size}
+        start={start}
+        dur={w.dur}
+        exitAt={exitAt}
+        exitDur={exitDur}
+        color={w.tone === 'ink' ? THEME.ink : THEME.text}
+        seed={w.text.length * 7 + Math.round(w.size)}
+        style={{zIndex: w.z ?? 1, translate: `${w.dx ?? 0}px ${w.dy ?? 0}px`}}
+      />
+    );
+  }
   const reveal = w.reveal ?? 'blur';
   const dur = w.dur ?? 22;
   const p = ramp(frame, start, dur);

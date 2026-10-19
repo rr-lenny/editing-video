@@ -70,8 +70,9 @@ export interface ImagePlacement {
  * sansLight = Inter Medium 500 (accroches)
  * serif     = Garamond italique (réponse, mot émotionnel)
  * link      = petit mot de liaison en serif italique (« de », « et », « une »)
+ * ink       = titre « encre imprimée » : Inter ExtraBold en capitales, très serré, bords qui bavent
  */
-export type Role = 'sans' | 'sansLight' | 'serif' | 'link';
+export type Role = 'sans' | 'sansLight' | 'serif' | 'link' | 'ink';
 export type Reveal = 'blur' | 'maskRight' | 'maskUp' | 'type';
 
 export interface WordSpec {
@@ -155,17 +156,12 @@ export const SEQUENCES: SequenceSpec[] = [
     voice: "J'ai découvert une philosophie japonaise",
     light: [520, 1020],
     type: {
-      top: 360,
+      top: 380,
       lines: [
-        {align: 'left', dx: 24, items: [{kind: 'caption', text: "J'ai découvert", at: 1.0}]},
-        {align: 'left', dx: 30, mt: 30, items: [{text: 'une', role: 'link', size: 44, at: 0.13}]},
-        {align: 'center', mt: -4, items: [{text: 'philosophie', role: 'sans', size: 126, at: 0}]},
-        {
-          align: 'right',
-          dx: -6,
-          mt: -6,
-          items: [{text: 'japonaise', role: 'serif', size: 186, at: 0.2, key: true, z: 2}],
-        },
+        {align: 'left', dx: 6, items: [{kind: 'caption', text: "J'ai découvert", at: 1.0}]},
+        {align: 'left', dx: 190, mt: 26, items: [{text: 'une', role: 'ink', size: 118, at: 0, tone: 'ink'}]},
+        {align: 'left', dx: -30, mt: -6, items: [{text: 'philosophie', role: 'ink', size: 112, at: 0.1, tone: 'ink'}]},
+        {align: 'right', dx: 0, mt: -6, items: [{text: 'japonaise', role: 'ink', size: 134, at: 0.23, key: true}]},
       ],
     },
     images: {
