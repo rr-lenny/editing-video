@@ -60,7 +60,7 @@ const Word: React.FC<WordProps> = ({w, start, exitAt, exitDur, fromX = 0}) => {
         gradient={w.tone === 'ink' ? THEME.inkGradient : THEME.textGradient}
         seed={w.text.length * 7 + Math.round(w.size)}
         fromX={fromX}
-        sheenAt={w.key ? start + (w.dur ?? 20) + 2 : undefined}
+        sheenAt={w.key ? start + (w.dur ?? 15) + 2 : undefined}
         style={{zIndex: w.z ?? 1, translate: `${w.dx ?? 0}px ${w.dy ?? 0}px`}}
       />
     );

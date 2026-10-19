@@ -1,9 +1,11 @@
 import React from 'react';
 import {AbsoluteFill, Html5Audio, staticFile} from 'remotion';
-import {AUDIO, getSequence, SEQUENCES} from './config';
+import {AUDIO, BACKGROUND, getSequence, SEQUENCES} from './config';
 import {GhostWord} from './components/GhostWord';
 import {LightingOverlay} from './components/LightingOverlay';
+import {NewspaperLayer} from './components/NewspaperLayer';
 import {PaperBackground} from './components/PaperBackground';
+import {sec} from './lib/anim';
 import {LightContext} from './lib/light';
 import {SEQUENCE_COMPONENTS} from './sequences';
 
@@ -15,12 +17,13 @@ export const SequencePreview: React.FC<{id: string}> = ({id}) => {
     <LightContext.Provider value={seq.light}>
       <AbsoluteFill>
         <PaperBackground light={seq.light} />
-        {seq.ghost ? (
+        {BACKGROUND.newspaper ? <NewspaperLayer opacity={BACKGROUND.newspaperOpacity} /> : null}
+        {BACKGROUND.ghostWords && seq.ghost ? (
           <GhostWord text={seq.ghost.text} y={seq.ghost.y} duration={seq.duration} overlap={seq.overlap} index={SEQUENCES.indexOf(seq)} />
         ) : null}
         {Component ? <Component /> : null}
         <LightingOverlay sweeps={false} />
-        <Html5Audio src={staticFile(AUDIO.voiceover.file)} trimBefore={seq.from} volume={AUDIO.voiceover.volume} />
+        <Html5Audio src={staticFile(AUDIO.voiceover.file)} trimBefore={seq.from + sec(AUDIO.voiceover.trimBefore)} volume={AUDIO.voiceover.volume} />
       </AbsoluteFill>
     </LightContext.Provider>
   );

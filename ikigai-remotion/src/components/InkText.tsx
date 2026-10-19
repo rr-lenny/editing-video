@@ -36,7 +36,7 @@ export const InkText: React.FC<Props> = ({
   text,
   size,
   start,
-  dur = 20,
+  dur = 15,
   exitAt = Infinity,
   exitDur = 14,
   color = THEME.ink,

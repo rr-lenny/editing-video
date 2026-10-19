@@ -59,7 +59,7 @@ export const LightingOverlay: React.FC<{sweeps?: boolean}> = ({sweeps = true}) =
       {/* vignette d'encre qui suit la lumière */}
       <AbsoluteFill
         style={{
-          background: `radial-gradient(ellipse 80% 62% at ${lx}px ${ly}px, ${rgba(THEME.ink, 0)} 42%, ${rgba(THEME.ink, 0.08)} 78%, ${rgba(THEME.ink, 0.2)} 100%)`,
+          background: `radial-gradient(ellipse 80% 62% at ${lx}px ${ly}px, ${rgba(THEME.ink, 0)} 42%, ${rgba(THEME.ink, 0.04)} 78%, ${rgba(THEME.ink, 0.12)} 100%)`,
           mixBlendMode: 'multiply',
         }}
       />

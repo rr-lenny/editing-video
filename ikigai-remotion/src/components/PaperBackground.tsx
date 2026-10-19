@@ -45,8 +45,8 @@ export const PaperBackground: React.FC<Props> = ({light = [540, 960], grid = 60}
   const mesh = [
     `radial-gradient(circle 760px at ${hx}px ${hy}px, rgba(255,255,255,0.92), rgba(255,255,255,0) 72%)`,
     `radial-gradient(circle 520px at ${h2x}px ${h2y}px, rgba(255,255,255,0.45), rgba(255,255,255,0) 70%)`,
-    `radial-gradient(circle 820px at ${s1x}px ${s1y}px, ${rgba(THEME.ink, 0.13)}, ${rgba(THEME.ink, 0)} 70%)`,
-    `radial-gradient(circle 900px at ${s2x}px ${s2y}px, ${rgba(THEME.ink, 0.16)}, ${rgba(THEME.ink, 0)} 70%)`,
+    `radial-gradient(circle 820px at ${s1x}px ${s1y}px, ${rgba(THEME.ink, 0.06)}, ${rgba(THEME.ink, 0)} 70%)`,
+    `radial-gradient(circle 900px at ${s2x}px ${s2y}px, ${rgba(THEME.ink, 0.08)}, ${rgba(THEME.ink, 0)} 70%)`,
     `linear-gradient(168deg, ${THEME.paperCenter} 0%, ${THEME.paperEdge} 48%, ${THEME.paperDeep} 100%)`,
   ].join(', ');
 
@@ -66,7 +66,7 @@ export const PaperBackground: React.FC<Props> = ({light = [540, 960], grid = 60}
           width: W + 1800,
           height: H + 1400,
           transform: `rotate(-24deg) translateX(${bandShift}px)`,
-          backgroundImage: `repeating-linear-gradient(90deg, ${rgba(THEME.ink, 0)} 0px, ${rgba(THEME.ink, 0.075)} 150px, ${rgba(THEME.ink, 0.075)} 210px, ${rgba(THEME.ink, 0)} 360px, ${rgba(THEME.ink, 0)} 560px)`,
+          backgroundImage: `repeating-linear-gradient(90deg, ${rgba(THEME.ink, 0)} 0px, ${rgba(THEME.ink, 0.04)} 150px, ${rgba(THEME.ink, 0.04)} 210px, ${rgba(THEME.ink, 0)} 360px, ${rgba(THEME.ink, 0)} 560px)`,
           filter: 'blur(38px)',
           mixBlendMode: 'multiply',
           opacity: 0.85,
@@ -100,7 +100,7 @@ export const PaperBackground: React.FC<Props> = ({light = [540, 960], grid = 60}
       {/* dégradé gris doux en bas, comme une page qui s'enroule */}
       <AbsoluteFill
         style={{
-          background: `linear-gradient(to top, ${rgba(THEME.ink, 0.09)} 0%, ${rgba(THEME.ink, 0)} 24%)`,
+          background: `linear-gradient(to top, ${rgba(THEME.ink, 0.05)} 0%, ${rgba(THEME.ink, 0)} 24%)`,
         }}
       />
 

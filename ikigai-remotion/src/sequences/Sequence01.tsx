@@ -36,7 +36,7 @@ export const Sequence01: React.FC = () => {
         <BWImage
           {...img}
           enterAt={0}
-          enterDur={22}
+          enterDur={12}
           enterFrom={{opacity: 0.5, blur: 4, scale: 0.97, dy: 24}}
           exitAt={exitAt}
           exitDur={exitDur}

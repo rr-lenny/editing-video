@@ -7,7 +7,7 @@ const FADE = 4; // frames de fondu sur chaque SFX
 
 /** Volume de la musique : fade-in, ducking pendant la voix, fade-out sur la dernière seconde. */
 const musicVolume = (frame: number, base: number): number => {
-  const t = frame / VIDEO.fps;
+  const t = frame / VIDEO.fps + AUDIO.voiceover.trimBefore;
   const speaking = VOICE_TIMINGS.some((v) => t >= v.start - 0.15 && t <= v.end + 0.15);
   const duck = speaking ? 0.45 : 1;
   const fadeIn = interpolate(frame, [0, VIDEO.fps], [0, 1], {extrapolateRight: 'clamp'});
@@ -21,7 +21,11 @@ const musicVolume = (frame: number, base: number): number => {
 /** Voix off (volume 1), SFX avec parcimonie, musique optionnelle. */
 export const AudioLayer: React.FC = () => (
   <>
-    <Html5Audio src={staticFile(AUDIO.voiceover.file)} volume={AUDIO.voiceover.volume} />
+    <Html5Audio
+      src={staticFile(AUDIO.voiceover.file)}
+      trimBefore={sec(AUDIO.voiceover.trimBefore)}
+      volume={AUDIO.voiceover.volume}
+    />
 
     {AUDIO.music ? (
       <Html5Audio src={staticFile(AUDIO.music.file)} volume={(f) => musicVolume(f, AUDIO.music!.volume)} loop />

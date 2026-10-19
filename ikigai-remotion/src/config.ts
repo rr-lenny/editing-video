@@ -12,7 +12,7 @@ export const VIDEO = {
   fps: 30,
   width: 1080,
   height: 1920,
-  durationInFrames: 921, // 30,70 s, calé sur la voix off
+  durationInFrames: 914, // 30,47 s : voix off (début de blanc coupé de 0,6 s) + respiration finale
 } as const;
 
 /** Safe zones TikTok / Reels : rien d'important hors de ce cadre. */
@@ -33,9 +33,18 @@ export const THEME = {
   paperCenter: '#F5F5F3',
   paperMid: '#EEEEEB',
   paperEdge: '#E4E4E1',
-  paperDeep: '#D2D2CC', // ombres du dégradé de fond
-  gridOpacity: 0.065,
+  paperDeep: '#E0DFD9', // ombres du dégradé de fond (fond léger)
+  gridOpacity: 0.025,
   grainOpacity: 0.045,
+} as const;
+
+/** Fond : style « journal » léger et animé. */
+export const BACKGROUND = {
+  newspaper: true,
+  /** opacité des colonnes d'articles du journal */
+  newspaperOpacity: 0.2,
+  /** grands mots contourés derrière les scènes */
+  ghostWords: false,
 } as const;
 
 /* ------------------------------------------------------------------ */
@@ -158,17 +167,17 @@ export const SEQUENCES: SequenceSpec[] = [
     name: 'Hook : philosophie japonaise',
     ghost: {text: 'Découverte', y: 1520},
     from: 0,
-    duration: 79,
+    duration: 61,
     overlap: 15,
     voice: "J'ai découvert une philosophie japonaise",
     light: [520, 1020],
     type: {
       top: 350,
       lines: [
-        {align: 'left', dx: 6, items: [{kind: 'caption', text: "J'ai découvert", at: 1.0}]},
-        {align: 'left', dx: 190, mt: 30, items: [{text: 'une', role: 'ink', size: 118, at: 0, tone: 'ink'}]},
-        {align: 'left', dx: -30, mt: 22, items: [{text: 'philosophie', role: 'ink', size: 112, at: 0.1, tone: 'ink'}]},
-        {align: 'right', dx: 0, mt: 22, items: [{text: 'japonaise', role: 'ink', size: 134, at: 0.23, key: true}]},
+        {align: 'left', dx: 6, items: [{text: "j'ai découvert", role: 'ink', size: 60, at: 0.12, tone: 'ink', dur: 12}]},
+        {align: 'left', dx: 190, mt: 30, items: [{text: 'une', role: 'ink', size: 118, at: 0.64, tone: 'ink', dur: 12}]},
+        {align: 'left', dx: -30, mt: 22, items: [{text: 'philosophie', role: 'ink', size: 112, at: 0.82, tone: 'ink', dur: 12}]},
+        {align: 'right', dx: 0, mt: 22, items: [{text: 'japonaise', role: 'ink', size: 134, at: 1.3, key: true, dur: 12}]},
       ],
     },
     images: {
@@ -179,7 +188,7 @@ export const SEQUENCES: SequenceSpec[] = [
     id: 'S02',
     name: 'Perception du bonheur',
     ghost: {text: 'Bonheur', y: 1180},
-    from: 79,
+    from: 61,
     duration: 53,
     overlap: 15,
     voice: 'qui va changer ta perception du bonheur',
@@ -187,15 +196,15 @@ export const SEQUENCES: SequenceSpec[] = [
     type: {
       top: 320,
       lines: [
-        {align: 'left', dx: 0, items: [{text: 'qui va changer ta', role: 'ink', size: 54, at: 2.7, tone: 'ink'}]},
-        {align: 'right', dx: 0, mt: 26, items: [{text: 'perception', role: 'ink', size: 116, at: 2.82, tone: 'ink'}]},
+        {align: 'left', dx: 0, items: [{text: 'qui va changer ta', role: 'ink', size: 54, at: 2.08, tone: 'ink'}]},
+        {align: 'right', dx: 0, mt: 26, items: [{text: 'perception', role: 'ink', size: 116, at: 2.73, tone: 'ink'}]},
         {
           align: 'left',
           dx: 10,
           mt: 26,
           items: [
-            {text: 'du', role: 'link', size: 72, at: 2.92, tone: 'ink'},
-            {text: 'bonheur', role: 'ink', size: 150, at: 3.0, key: true},
+            {text: 'du', role: 'link', size: 72, at: 3.11, tone: 'ink'},
+            {text: 'bonheur', role: 'ink', size: 150, at: 3.21, key: true},
           ],
         },
       ],
@@ -206,7 +215,7 @@ export const SEQUENCES: SequenceSpec[] = [
     id: 'S03',
     name: 'Vivre de ta création',
     ghost: {text: 'Création', y: 1560},
-    from: 132,
+    from: 114,
     duration: 65,
     overlap: 15,
     voice: 'si tu as la volonté de vivre de ta création',
@@ -214,10 +223,10 @@ export const SEQUENCES: SequenceSpec[] = [
     type: {
       top: 300,
       lines: [
-        {align: 'left', items: [{text: 'si tu as la volonté', role: 'ink', size: 52, at: 4.5, tone: 'ink'}]},
-        {align: 'left', mt: 24, items: [{text: 'de vivre de ta', role: 'ink', size: 86, at: 4.68, tone: 'ink'}]},
-        {align: 'right', mt: 24, items: [{text: 'création', role: 'ink', size: 160, at: 5.15, key: true}]},
-        {align: 'right', mt: 34, items: [{kind: 'rule', left: 'vivre', right: 'créer', width: 200, at: 5.4}]},
+        {align: 'left', items: [{text: 'si tu as la volonté', role: 'ink', size: 52, at: 3.9, tone: 'ink'}]},
+        {align: 'left', mt: 24, items: [{text: 'de vivre de ta', role: 'ink', size: 86, at: 4.7, tone: 'ink'}]},
+        {align: 'right', mt: 24, items: [{text: 'création', role: 'ink', size: 160, at: 5.13, key: true}]},
+        {align: 'right', mt: 34, items: [{kind: 'rule', left: 'vivre', right: 'créer', width: 200, at: 5.48}]},
       ],
     },
     images: {macintosh: {asset: 'macintosh', x: 520, y: 1215, width: 600, rotate: 1}},
@@ -226,7 +235,7 @@ export const SEQUENCES: SequenceSpec[] = [
     id: 'S04',
     name: 'Révélation IKIGAI',
     ghost: {text: 'Ikigai', y: 1440},
-    from: 197,
+    from: 179,
     duration: 72,
     overlap: 15,
     voice: "Ce principe, c'est l'IKIGAI",
@@ -234,11 +243,11 @@ export const SEQUENCES: SequenceSpec[] = [
     type: {
       top: 640,
       lines: [
-        {align: 'left', dx: 20, items: [{text: 'ce principe,', role: 'ink', size: 66, at: 6.81, tone: 'ink'}]},
-        {align: 'left', dx: 60, mt: 18, items: [{text: "c'est l'", role: 'link', size: 72, at: 7.2, tone: 'ink'}]},
-        {align: 'center', mt: 14, items: [{text: 'ikigai', role: 'ink', size: 214, at: 7.76, key: true, dur: 22}]},
-        {align: 'center', mt: 40, items: [{kind: 'rule', left: 'n.', right: "raison d'être", width: 220, at: 8.1}]},
-        {align: 'center', mt: 34, items: [{kind: 'caption', text: 'Philosophie japonaise ®', at: 8.3}]},
+        {align: 'left', dx: 20, items: [{text: 'ce principe,', role: 'ink', size: 66, at: 6.14, tone: 'ink'}]},
+        {align: 'left', dx: 60, mt: 18, items: [{text: "c'est l'", role: 'link', size: 72, at: 6.57, tone: 'ink'}]},
+        {align: 'center', mt: 14, items: [{text: 'ikigai', role: 'ink', size: 214, at: 7.09, key: true, dur: 16}]},
+        {align: 'center', mt: 40, items: [{kind: 'rule', left: 'n.', right: "raison d'être", width: 220, at: 7.48}]},
+        {align: 'center', mt: 34, items: [{kind: 'caption', text: 'Philosophie japonaise ®', at: 7.68}]},
       ],
     },
   },
@@ -246,7 +255,7 @@ export const SEQUENCES: SequenceSpec[] = [
     id: 'S05',
     name: '4 piliers',
     ghost: {text: 'Piliers', y: 1660},
-    from: 269,
+    from: 251,
     duration: 67,
     overlap: 15,
     voice: 'Elle repose sur 4 piliers fondamentaux',
@@ -254,18 +263,18 @@ export const SEQUENCES: SequenceSpec[] = [
     type: {
       top: 300,
       lines: [
-        {align: 'left', items: [{text: 'elle repose sur', role: 'ink', size: 58, at: 9.2, tone: 'ink'}]},
+        {align: 'left', items: [{text: 'elle repose sur', role: 'ink', size: 58, at: 8.61, tone: 'ink'}]},
         {
           align: 'left',
           dx: 30,
           mt: 26,
           gap: 26,
           items: [
-            {text: '4', role: 'ink', size: 210, at: 9.55, key: true},
-            {text: 'piliers', role: 'ink', size: 124, at: 9.7, tone: 'ink'},
+            {text: '4', role: 'ink', size: 210, at: 9.22, key: true},
+            {text: 'piliers', role: 'ink', size: 124, at: 9.37, tone: 'ink'},
           ],
         },
-        {align: 'right', mt: 26, items: [{text: 'fondamentaux', role: 'ink', size: 82, at: 10.15, tone: 'ink'}]},
+        {align: 'right', mt: 26, items: [{text: 'fondamentaux', role: 'ink', size: 82, at: 9.68, tone: 'ink'}]},
       ],
     },
     images: {
@@ -279,7 +288,7 @@ export const SEQUENCES: SequenceSpec[] = [
     id: 'S06',
     name: 'Pilier 1 : aimer',
     ghost: {text: 'Passion', y: 1560},
-    from: 336,
+    from: 318,
     duration: 44,
     overlap: 12,
     voice: 'Ce que tu aimes faire',
@@ -287,10 +296,10 @@ export const SEQUENCES: SequenceSpec[] = [
     type: {
       top: 290,
       lines: [
-        {align: 'left', items: [{kind: 'caption', text: '01 — Passion', at: 11.5}]},
-        {align: 'left', mt: 24, items: [{text: 'ce que tu', role: 'ink', size: 72, at: 11.3, tone: 'ink'}]},
-        {align: 'center', mt: 22, items: [{text: 'aimes', role: 'ink', size: 190, at: 11.42, key: true}]},
-        {align: 'right', mt: 22, items: [{text: 'faire', role: 'ink', size: 110, at: 11.6, tone: 'ink'}]},
+        {align: 'left', items: [{kind: 'caption', text: '01 — Passion', at: 10.77}]},
+        {align: 'left', mt: 24, items: [{text: 'ce que tu', role: 'ink', size: 72, at: 10.77, tone: 'ink'}]},
+        {align: 'center', mt: 22, items: [{text: 'aimes', role: 'ink', size: 190, at: 11.28, key: true}]},
+        {align: 'right', mt: 22, items: [{text: 'faire', role: 'ink', size: 110, at: 11.46, tone: 'ink'}]},
       ],
     },
     images: {coeur: {asset: 'coeur', x: 520, y: 1190, width: 400, rotate: 2}},
@@ -299,7 +308,7 @@ export const SEQUENCES: SequenceSpec[] = [
     id: 'S07',
     name: 'Pilier 2 : doué',
     ghost: {text: 'Talent', y: 1640},
-    from: 380,
+    from: 362,
     duration: 43,
     overlap: 12,
     voice: 'Ce en quoi tu es doué',
@@ -307,10 +316,10 @@ export const SEQUENCES: SequenceSpec[] = [
     type: {
       top: 320,
       lines: [
-        {align: 'left', items: [{kind: 'caption', text: '02 — Talent', at: 13.0}]},
-        {align: 'left', mt: 24, items: [{text: 'ce en quoi', role: 'ink', size: 74, at: 12.72, tone: 'ink'}]},
-        {align: 'left', mt: 22, items: [{text: 'tu es', role: 'ink', size: 96, at: 12.84, tone: 'ink'}]},
-        {align: 'left', mt: 22, items: [{text: 'doué', role: 'ink', size: 214, at: 12.98, key: true}]},
+        {align: 'left', items: [{kind: 'caption', text: '02 — Talent', at: 12.22}]},
+        {align: 'left', mt: 24, items: [{text: 'ce en quoi', role: 'ink', size: 74, at: 12.22, tone: 'ink'}]},
+        {align: 'left', mt: 22, items: [{text: 'tu es', role: 'ink', size: 96, at: 12.64, tone: 'ink'}]},
+        {align: 'left', mt: 22, items: [{text: 'doué', role: 'ink', size: 214, at: 12.91, key: true}]},
       ],
     },
     images: {cerveau: {asset: 'cerveau', x: 800, y: 1230, width: 880, rotate: -6}},
@@ -319,7 +328,7 @@ export const SEQUENCES: SequenceSpec[] = [
     id: 'S08',
     name: 'Pilier 3 : besoin',
     ghost: {text: 'Mission', y: 880},
-    from: 423,
+    from: 405,
     duration: 48,
     overlap: 12,
     voice: 'Ce dont le monde a besoin',
@@ -327,10 +336,10 @@ export const SEQUENCES: SequenceSpec[] = [
     type: {
       top: 300,
       lines: [
-        {align: 'center', items: [{kind: 'caption', text: '03 — Mission', at: 14.45}]},
-        {align: 'center', mt: 24, items: [{text: 'ce dont', role: 'ink', size: 74, at: 14.18, tone: 'ink'}]},
-        {align: 'center', mt: 22, items: [{text: 'le monde a', role: 'ink', size: 100, at: 14.3, tone: 'ink'}]},
-        {align: 'center', mt: 22, items: [{text: 'besoin', role: 'ink', size: 190, at: 14.45, key: true}]},
+        {align: 'center', items: [{kind: 'caption', text: '03 — Mission', at: 13.69}]},
+        {align: 'center', mt: 24, items: [{text: 'ce dont', role: 'ink', size: 74, at: 13.69, tone: 'ink'}]},
+        {align: 'center', mt: 22, items: [{text: 'le monde a', role: 'ink', size: 100, at: 14.05, tone: 'ink'}]},
+        {align: 'center', mt: 22, items: [{text: 'besoin', role: 'ink', size: 190, at: 14.51, key: true}]},
       ],
     },
     images: {mains: {asset: 'mains', x: 520, y: 1250, width: 920}},
@@ -339,7 +348,7 @@ export const SEQUENCES: SequenceSpec[] = [
     id: 'S09',
     name: 'Pilier 4 : payé',
     ghost: {text: 'Profession', y: 820},
-    from: 471,
+    from: 453,
     duration: 68,
     overlap: 15,
     voice: 'Et enfin, ce pour quoi tu es payé',
@@ -347,16 +356,16 @@ export const SEQUENCES: SequenceSpec[] = [
     type: {
       top: 300,
       lines: [
-        {align: 'left', items: [{kind: 'caption', text: '04 — Profession', at: 16.75}]},
-        {align: 'left', mt: 24, items: [{text: 'et enfin,', role: 'link', size: 72, at: 15.85, tone: 'ink'}]},
-        {align: 'left', mt: 22, items: [{text: 'ce pour quoi', role: 'ink', size: 84, at: 16.62, tone: 'ink'}]},
+        {align: 'left', items: [{kind: 'caption', text: '04 — Profession', at: 16.05}]},
+        {align: 'left', mt: 24, items: [{text: 'et enfin,', role: 'link', size: 72, at: 15.21, tone: 'ink'}]},
+        {align: 'left', mt: 22, items: [{text: 'ce pour quoi', role: 'ink', size: 84, at: 16.05, tone: 'ink'}]},
         {
           align: 'right',
           mt: 22,
           gap: 22,
           items: [
-            {text: 'tu es', role: 'ink', size: 90, at: 16.75, tone: 'ink'},
-            {text: 'payé', role: 'ink', size: 196, at: 16.88, key: true},
+            {text: 'tu es', role: 'ink', size: 90, at: 16.46, tone: 'ink'},
+            {text: 'payé', role: 'ink', size: 196, at: 16.74, key: true},
           ],
         },
       ],
@@ -370,7 +379,7 @@ export const SEQUENCES: SequenceSpec[] = [
     id: 'S10',
     name: 'Équilibre / direction',
     ghost: {text: 'Équilibre', y: 1600},
-    from: 539,
+    from: 521,
     duration: 66,
     overlap: 15,
     voice: 'Cet équilibre permet de trouver ta direction',
@@ -382,12 +391,12 @@ export const SEQUENCES: SequenceSpec[] = [
           align: 'left',
           gap: 20,
           items: [
-            {text: 'cet', role: 'link', size: 76, at: 18.2, tone: 'ink'},
-            {text: 'équilibre', role: 'ink', size: 118, at: 18.3, tone: 'ink'},
+            {text: 'cet', role: 'link', size: 76, at: 17.55, tone: 'ink'},
+            {text: 'équilibre', role: 'ink', size: 118, at: 17.67, tone: 'ink'},
           ],
         },
-        {align: 'right', mt: 24, items: [{text: 'permet de trouver ta', role: 'ink', size: 54, at: 18.75, tone: 'ink'}]},
-        {align: 'center', mt: 24, items: [{text: 'direction', role: 'ink', size: 142, at: 19.15, key: true}]},
+        {align: 'right', mt: 24, items: [{text: 'permet de trouver ta', role: 'ink', size: 54, at: 18.06, tone: 'ink'}]},
+        {align: 'center', mt: 24, items: [{text: 'direction', role: 'ink', size: 142, at: 18.81, key: true}]},
       ],
     },
     images: {ball: {asset: 'ball', x: 520, y: 1200, width: 400}},
@@ -396,7 +405,7 @@ export const SEQUENCES: SequenceSpec[] = [
     id: 'S11',
     name: 'Du sens à ta vie',
     ghost: {text: 'Sens', y: 1380},
-    from: 605,
+    from: 587,
     duration: 46,
     overlap: 12,
     voice: 'remettre du sens à ta vie',
@@ -404,9 +413,9 @@ export const SEQUENCES: SequenceSpec[] = [
     type: {
       top: 720,
       lines: [
-        {align: 'left', dx: 20, items: [{text: 'remettre du', role: 'ink', size: 82, at: 20.15, tone: 'ink'}]},
-        {align: 'center', mt: 22, items: [{text: 'sens', role: 'ink', size: 236, at: 20.3, key: true}]},
-        {align: 'right', mt: 22, items: [{text: 'à ta vie', role: 'ink', size: 104, at: 20.5, tone: 'ink'}]},
+        {align: 'left', dx: 20, items: [{text: 'remettre du', role: 'ink', size: 82, at: 19.6, tone: 'ink'}]},
+        {align: 'center', mt: 22, items: [{text: 'sens', role: 'ink', size: 236, at: 20.2, key: true}]},
+        {align: 'right', mt: 22, items: [{text: 'à ta vie', role: 'ink', size: 104, at: 20.32, tone: 'ink'}]},
       ],
     },
     images: {ampoule: {asset: 'ampoule', x: 150, y: 330, width: 430, rotate: 172}},
@@ -415,7 +424,7 @@ export const SEQUENCES: SequenceSpec[] = [
     id: 'S12',
     name: "T'épanouir",
     ghost: {text: 'Épanouir', y: 880},
-    from: 651,
+    from: 633,
     duration: 89,
     overlap: 15,
     voice: "et de pouvoir pleinement t'épanouir dans tes projets créatifs",
@@ -423,10 +432,10 @@ export const SEQUENCES: SequenceSpec[] = [
     type: {
       top: 290,
       lines: [
-        {align: 'left', items: [{text: 'et de pouvoir', role: 'ink', size: 66, at: 21.85, tone: 'ink'}]},
-        {align: 'left', mt: 24, items: [{text: 'pleinement', role: 'ink', size: 120, at: 22.1, tone: 'ink'}]},
-        {align: 'right', mt: 24, items: [{text: "t'épanouir", role: 'ink', size: 136, at: 23.0, key: true, dur: 24}]},
-        {align: 'right', mt: 36, items: [{kind: 'rule', left: 'dans tes', right: 'projets créatifs', width: 150, at: 23.3}]},
+        {align: 'left', items: [{text: 'et de pouvoir', role: 'ink', size: 66, at: 21.2, tone: 'ink'}]},
+        {align: 'left', mt: 24, items: [{text: 'pleinement', role: 'ink', size: 120, at: 21.72, tone: 'ink'}]},
+        {align: 'right', mt: 24, items: [{text: "t'épanouir", role: 'ink', size: 136, at: 22.37, key: true, dur: 16}]},
+        {align: 'right', mt: 36, items: [{kind: 'rule', left: 'dans tes', right: 'projets créatifs', width: 150, at: 22.9}]},
       ],
     },
     images: {macintosh: {asset: 'macintosh', x: 760, y: 1360, width: 900, rotate: -4}},
@@ -435,7 +444,7 @@ export const SEQUENCES: SequenceSpec[] = [
     id: 'S13',
     name: 'CTA : enregistre',
     ghost: {text: 'Enregistre', y: 1420},
-    from: 740,
+    from: 722,
     duration: 86,
     overlap: 15,
     voice: "N'hésite pas à enregistrer cette vidéo pour ne pas l'oublier",
@@ -443,10 +452,10 @@ export const SEQUENCES: SequenceSpec[] = [
     type: {
       top: 650,
       lines: [
-        {align: 'left', items: [{text: "n'hésite pas à", role: 'ink', size: 70, at: 24.8, tone: 'ink'}]},
-        {align: 'center', mt: 24, items: [{text: 'enregistre', role: 'ink', size: 134, at: 25.35, key: true, dur: 24}]},
-        {align: 'right', mt: 24, items: [{text: 'cette vidéo', role: 'ink', size: 96, at: 25.7, tone: 'ink'}]},
-        {align: 'center', mt: 44, items: [{kind: 'rule', left: 'pour ne pas', right: "l'oublier →", width: 130, at: 26.1}]},
+        {align: 'left', items: [{text: "n'hésite pas à", role: 'ink', size: 70, at: 24.16, tone: 'ink'}]},
+        {align: 'center', mt: 24, items: [{text: 'enregistre', role: 'ink', size: 134, at: 24.67, key: true, dur: 16}]},
+        {align: 'right', mt: 24, items: [{text: 'cette vidéo', role: 'ink', size: 96, at: 25.17, tone: 'ink'}]},
+        {align: 'center', mt: 44, items: [{kind: 'rule', left: 'pour ne pas', right: "l'oublier →", width: 130, at: 25.86}]},
       ],
     },
   },
@@ -454,18 +463,18 @@ export const SEQUENCES: SequenceSpec[] = [
     id: 'S14',
     name: 'Fin / boucle',
     ghost: {text: 'Inspiration', y: 1520},
-    from: 826,
-    duration: 95,
+    from: 808,
+    duration: 106,
     overlap: 0,
     voice: 'et je te dis à très vite pour de nouvelles inspirations',
     light: [520, 1020],
     type: {
       top: 320,
       lines: [
-        {align: 'left', items: [{text: 'et je te dis', role: 'link', size: 64, at: 27.68, tone: 'ink'}]},
-        {align: 'left', mt: 22, items: [{text: 'à très vite', role: 'ink', size: 118, at: 27.85, tone: 'ink'}]},
-        {align: 'right', mt: 26, items: [{text: 'pour de nouvelles', role: 'ink', size: 58, at: 28.55, tone: 'ink'}]},
-        {align: 'center', mt: 24, items: [{text: 'inspirations', role: 'ink', size: 110, at: 28.7, key: true}]},
+        {align: 'left', items: [{text: 'et je te dis', role: 'link', size: 64, at: 27.05, tone: 'ink'}]},
+        {align: 'left', mt: 22, items: [{text: 'à très vite', role: 'ink', size: 118, at: 27.69, tone: 'ink'}]},
+        {align: 'right', mt: 26, items: [{text: 'pour de nouvelles', role: 'ink', size: 58, at: 28.24, tone: 'ink'}]},
+        {align: 'center', mt: 24, items: [{text: 'inspirations', role: 'ink', size: 110, at: 28.75, key: true}]},
       ],
     },
     images: {ampoule: {asset: 'ampoule', x: 520, y: 1130, width: 480, rotate: -2}},
@@ -482,7 +491,7 @@ export const getSequence = (id: string): SequenceSpec => {
 /* Audio                                                               */
 /* ------------------------------------------------------------------ */
 
-/** Phrases de la voix off (détection des pauses, secondes). */
+/** Phrases de la voix off, en secondes DU FICHIER audio (soustraire voiceover.trimBefore pour le temps vidéo). */
 export const VOICE_TIMINGS = [
   {start: 0.79, end: 2.49, text: "J'ai découvert une philosophie japonaise"},
   {start: 2.75, end: 4.21, text: 'qui va changer ta perception du bonheur'},
@@ -506,7 +515,8 @@ export const VOICE_TIMINGS = [
 ] as const;
 
 export const AUDIO = {
-  voiceover: {file: 'audio/voiceover.mp3', volume: 1},
+  /** trimBefore : blanc coupé au début de la voix (s) : la voix démarre à 0,19 s (hook immédiat) */
+  voiceover: {file: 'audio/voiceover.mp3', volume: 1, trimBefore: 0.6},
   /** Pas de musique pour cette vidéo. Renseigner {file, volume, bpm} pour en ajouter une. */
   music: null as null | {file: string; volume: number; bpm?: number},
 } as const;
