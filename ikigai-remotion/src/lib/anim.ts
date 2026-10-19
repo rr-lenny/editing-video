@@ -4,6 +4,8 @@ import {VIDEO} from '../config';
 /** Easings doux uniquement, sans rebond ni overshoot. */
 export const EASE = Easing.bezier(0.33, 0, 0.2, 1);
 export const EASE_SOFT = Easing.bezier(0.25, 0.1, 0.25, 1);
+/** Entrée dynamique : départ vif, très longue arrivée en douceur (aucun dépassement). */
+export const EASE_DYN = Easing.bezier(0.16, 1, 0.3, 1);
 
 /** Progression 0 → 1 entre `start` et `start + dur` (frames), bornée. */
 export const ramp = (frame: number, start: number, dur: number, easing = EASE): number => {

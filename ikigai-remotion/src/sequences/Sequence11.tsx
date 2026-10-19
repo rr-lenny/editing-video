@@ -29,6 +29,7 @@ export const Sequence11: React.FC = () => {
         enterFrom={{dy: -60, blur: 8, opacity: 0, scale: 0.95}}
         float={5}
         sway={2.5}
+        contact={false}
       />
     </SceneShell>
   );

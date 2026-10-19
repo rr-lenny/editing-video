@@ -41,9 +41,11 @@ interface WordProps {
   start: number;
   exitAt: number;
   exitDur: number;
+  /** décalage horizontal d'entrée (selon l'alignement de la ligne) */
+  fromX?: number;
 }
 
-const Word: React.FC<WordProps> = ({w, start, exitAt, exitDur}) => {
+const Word: React.FC<WordProps> = ({w, start, exitAt, exitDur, fromX = 0}) => {
   const frame = useCurrentFrame();
   if (w.role === 'ink') {
     return (
@@ -57,6 +59,8 @@ const Word: React.FC<WordProps> = ({w, start, exitAt, exitDur}) => {
         color={w.tone === 'ink' ? THEME.ink : THEME.text}
         gradient={w.tone === 'ink' ? THEME.inkGradient : THEME.textGradient}
         seed={w.text.length * 7 + Math.round(w.size)}
+        fromX={fromX}
+        sheenAt={w.key ? start + (w.dur ?? 20) + 2 : undefined}
         style={{zIndex: w.z ?? 1, translate: `${w.dx ?? 0}px ${w.dy ?? 0}px`}}
       />
     );
@@ -169,9 +173,9 @@ export const TypeComposition: React.FC<Props> = ({spec, seqFrom, exitAt, exitDur
   const width = spec.width ?? TYPE_COLUMN.width;
   const local = (s: number) => sec(s) - seqFrom;
 
-  const renderItem = (item: Item, li: number, ii: number) => {
+  const renderItem = (item: Item, li: number, ii: number, fromX: number) => {
     // les lignes sortent avec un très léger décalage, de haut en bas
-    const xa = exitAt + li * 2;
+    const xa = exitAt + li;
     const key = `${li}-${ii}`;
     if (item.kind === 'rule') {
       return <EditorialRule key={key} left={item.left} right={item.right} width={item.width} start={local(item.at)} exitAt={xa} exitDur={exitDur} />;
@@ -189,7 +193,7 @@ export const TypeComposition: React.FC<Props> = ({spec, seqFrom, exitAt, exitDur
         />
       );
     }
-    return <Word key={key} w={item} start={local(item.at)} exitAt={xa} exitDur={exitDur} />;
+    return <Word key={key} w={item} start={local(item.at)} exitAt={xa} exitDur={exitDur} fromX={fromX} />;
   };
 
   const justify = (l: LineSpec) => (l.align === 'left' ? 'flex-start' : l.align === 'right' ? 'flex-end' : 'center');
@@ -218,7 +222,7 @@ export const TypeComposition: React.FC<Props> = ({spec, seqFrom, exitAt, exitDur
             transform: `translateX(${l.dx ?? 0}px)`,
           }}
         >
-          {l.items.map((it, ii) => renderItem(it, li, ii))}
+          {l.items.map((it, ii) => renderItem(it, li, ii, l.align === 'left' ? -90 : l.align === 'right' ? 90 : 0))}
         </div>
       ))}
     </div>

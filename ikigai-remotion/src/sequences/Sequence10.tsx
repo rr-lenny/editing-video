@@ -2,6 +2,7 @@ import React from 'react';
 import {getSequence} from '../config';
 import {BWImage} from '../components/BWImage';
 import {DashedCircle} from '../components/DashedCircle';
+import {Spotlight} from '../components/LightingOverlay';
 import {SceneShell} from '../components/SceneShell';
 import {SweepingArc} from '../components/SweepingArc';
 
@@ -20,6 +21,7 @@ export const Sequence10: React.FC = () => {
   return (
     <SceneShell
       seq={SEQ}
+      lighting={<Spotlight x={img.x} y={img.y - 120} r={620} start={30} exitAt={SEQ.duration} exitDur={SEQ.overlap} />}
       push={1.04}
       pushOrigin={[img.x, img.y]}
       decor={

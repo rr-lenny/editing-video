@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useId} from 'react';
 import {AbsoluteFill, useCurrentFrame} from 'remotion';
 import {VIDEO} from '../config';
-import {EASE, EASE_SOFT, mix, ramp} from '../lib/anim';
+import {EASE_DYN, EASE_SOFT, mix, ramp, svgId} from '../lib/anim';
 
 export type TransitionKind =
   | 'none'
@@ -31,6 +31,8 @@ interface Look {
   x: number;
   scale: number;
   blur: number;
+  /** flou de mouvement horizontal (glissements) */
+  blurX?: number;
   mask?: string;
 }
 
@@ -53,8 +55,8 @@ const look = (kind: TransitionKind, t: number, entering: boolean): Look => {
     case 'slideRight': {
       const s = kind === 'slideLeft' ? -1 : 1;
       // en entrée, on arrive depuis le côté opposé
-      const x = (entering ? -s : s) * hidden * 140;
-      return {opacity: t, x, scale: 1, blur: hidden * 10};
+      const x = (entering ? -s : s) * hidden * 240;
+      return {opacity: t, x, scale: 1, blur: hidden * 2, blurX: hidden * 28};
     }
     case 'zoom':
       return {opacity: t, x: 0, scale: entering ? mix(0.92, 1, t) : mix(1.35, 1, t), blur: hidden * 10};
@@ -76,11 +78,14 @@ export const SoftTransition: React.FC<Props> = ({
   children,
 }) => {
   const frame = useCurrentFrame();
-  const a = look(enter, ramp(frame, enterAt, enterDur, EASE), true);
+  const a = look(enter, ramp(frame, enterAt, enterDur, EASE_DYN), true);
   const b = look(exit, 1 - ramp(frame, exitAt, exitDur, EASE_SOFT), false);
   const masks = [a.mask, b.mask].filter(Boolean) as string[];
   const mask = masks.length ? masks.join(', ') : undefined;
   const blur = a.blur + b.blur;
+  const blurX = (a.blurX ?? 0) + (b.blurX ?? 0);
+  const fid = svgId(`st-${useId()}`);
+  const filter = blurX > 0.05 ? `url(#${fid})` : blur > 0.05 ? `blur(${blur}px)` : undefined;
 
   return (
     <AbsoluteFill
@@ -88,7 +93,7 @@ export const SoftTransition: React.FC<Props> = ({
         opacity: a.opacity * b.opacity,
         transform: `translateX(${a.x + b.x}px) scale(${a.scale * b.scale})`,
         transformOrigin: `${origin[0]}px ${origin[1]}px`,
-        filter: blur > 0.05 ? `blur(${blur}px)` : undefined,
+        filter,
         WebkitMaskImage: mask,
         maskImage: mask,
         WebkitMaskComposite: masks.length > 1 ? 'source-in' : undefined,
@@ -96,6 +101,13 @@ export const SoftTransition: React.FC<Props> = ({
         ...style,
       }}
     >
+      {blurX > 0.05 ? (
+        <svg width={0} height={0} style={{position: 'absolute'}} aria-hidden>
+          <filter id={fid} x="-10%" y="-5%" width="120%" height="110%">
+            <feGaussianBlur stdDeviation={`${blurX} ${blur}`} />
+          </filter>
+        </svg>
+      ) : null}
       {children}
     </AbsoluteFill>
   );

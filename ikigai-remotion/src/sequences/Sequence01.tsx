@@ -45,7 +45,7 @@ export const Sequence01: React.FC = () => {
           sway={1.6}
         />
 
-        <TypeComposition spec={SEQ.type!} seqFrom={SEQ.from} exitAt={exitAt} exitDur={exitDur} />
+        <TypeComposition spec={SEQ.type!} seqFrom={SEQ.from} exitAt={exitAt - 7} exitDur={8} />
       </PushIn>
     </AbsoluteFill>
   );

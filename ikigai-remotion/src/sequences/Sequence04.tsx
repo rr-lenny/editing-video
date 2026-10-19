@@ -1,6 +1,7 @@
 import React from 'react';
 import {getSequence} from '../config';
 import {DashedCircle} from '../components/DashedCircle';
+import {Spotlight} from '../components/LightingOverlay';
 import {SceneShell} from '../components/SceneShell';
 import {SweepingArc} from '../components/SweepingArc';
 
@@ -10,6 +11,7 @@ const SEQ = getSequence('S04');
 export const Sequence04: React.FC = () => (
   <SceneShell
     seq={SEQ}
+    lighting={<Spotlight x={510} y={930} r={560} start={34} exitAt={SEQ.duration} exitDur={SEQ.overlap} strength={0.2} />}
     push={1.04}
     pushOrigin={[510, 900]}
     exit="slideLeft"
