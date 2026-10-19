@@ -1,9 +1,13 @@
 /* scenes.js — IKIGAI, 30.7 s, 9:16 (1080×1920, 24 fps), torn-paper collage on twos. Code only: no cut-outs, no photos.
- * Picture is cut to the voice-over phrases (audio/voix-off.mp3, silencedetect −35 dB / 0.3 s):
- *   0.79 · 4.56 · 6.81 · 9.28 · 11.44 · 12.89 · 14.36 · 15.88 · 18.22 · 21.87 · 24.82 · 27.72 (voice ends 30.19)
- *   0–4.56 IKIGAI title drop + burst · 4.56 / 6.81 / 9.28 / 11.44 the four circles (torn sheet wipes) · 12.89 the circles assemble into the Venn
- *   14.36 PASSION / MISSION / VOCATION / PROFESSION · 15.88 IKIGAI star in the centre · 16.5 push into it → paper iris → kaleidoscope 18.22
- *   21.87 hex hole → TROUVE TON IKIGAI · 24.82 the four icons slap in · 27.72 page tear → ikigai logo band + TA RAISON D'ÊTRE
+ * Every on-screen word follows the voice-over script; each clause starts on its measured voice onset
+ * (audio/voix-off.mp3, silencedetect −28 dB / 0.12 s — 19 speech chunks = the 19 clauses of the script):
+ *   0.79 J'ai découvert une philosophie japonaise · 2.75 qui va changer ta perception du bonheur · 4.57 si tu as la volonté de vivre de ta création
+ *   6.81 Ce principe · 7.77 c'est l'IKIGAI · 9.28 Elle repose sur 4 piliers fondamentaux
+ *   11.44 Ce que tu aimes faire · 12.89 Ce en quoi tu es doué · 14.36 Ce dont le monde a besoin · 15.89 Et enfin, · 16.72 ce pour quoi tu es payé
+ *   18.23 Cet équilibre permet de trouver ta direction · 20.28 remettre du sens à ta vie · 21.88 et de pouvoir pleinement · 23.04 t'épanouir dans tes projets créatifs
+ *   24.89 N'hésite pas à enregistrer cette vidéo · 26.53 pour ne pas l'oublier · 27.72 et je te dis à très vite · 28.91 pour de nouvelles inspirations (voice ends 30.18)
+ * Picture: philosophie japonaise (hinomaru) → bonheur (paper smiley) → création (paper pencil) → IKIGAI title + 4 piliers → the four circles
+ *   → Venn (équilibre) + IKIGAI star → push into it → iris → kaleidoscope (t'épanouir) → hex hole → save card + cursor click → page tear → « à très vite ! » band
  */
 (function () {
   'use strict';
@@ -12,17 +16,20 @@
 
   /* ---------- copy: every on-screen word lives here ---------- */
   const COPY = {
-    title: ['IKIGAI'],
-    meaning: "LA RAISON D'ÊTRE ✦",
-    cards: [['CE QUE', 'TU AIMES'], ['CE EN QUOI', 'TU ES DOUÉ'], ['CE DONT', 'LE MONDE', 'A BESOIN'], ['CE POUR QUOI', 'TU PEUX', 'ÊTRE PAYÉ']],
-    inter: ['PASSION', 'MISSION', 'VOCATION', 'PROFESSION'],
-    center: 'IKIGAI',
-    find: ['TROUVE', 'TON IKIGAI'],
-    logo: 'ikigai',
-    end: ['TA RAISON', "D'ÊTRE"],
+    found: "J'AI DÉCOUVERT UNE", philo: ['PHILOSOPHIE', 'JAPONAISE'],
+    change: 'QUI VA CHANGER TA', percep: 'PERCEPTION DU', bonheur: 'BONHEUR',
+    will: 'SI TU AS LA VOLONTÉ DE', create: ['VIVRE DE TA', 'CRÉATION'],
+    principle: "CE PRINCIPE, C'EST", title: ['IKIGAI'], pillars: '4 PILIERS FONDAMENTAUX',
+    cards: [['CE QUE TU', 'AIMES FAIRE'], ['CE EN QUOI', 'TU ES DOUÉ'], ['CE DONT', 'LE MONDE', 'A BESOIN'], ['CE POUR QUOI', 'TU ES PAYÉ']],
+    finally: 'ET ENFIN…',
+    balance: "L'ÉQUILIBRE", direction: 'TROUVER TA DIRECTION', sense: 'DU SENS À TA VIE', center: 'IKIGAI',
+    fully: 'PLEINEMENT', bloom: "T'ÉPANOUIR", projects: 'DANS TES PROJETS CRÉATIFS',
+    dont: "N'HÉSITE PAS À", save: ['ENREGISTRER', 'CETTE VIDÉO'], forget: "POUR NE PAS L'OUBLIER",
+    soon: 'à très vite !', newIns: 'POUR DE NOUVELLES', insp: 'INSPIRATIONS',
   };
-  const T = { v1: 0.79, c: [4.56, 6.81, 9.28, 11.44], venn: 12.89, inter: 14.36, ik: 15.88, push: [16.5, 18.2], kal: 18.22, find: 21.87, icons: 24.82, end: 27.72, dur: 30.7 };
-  K.setup({ bars: [T.v1, ...T.c, T.venn, T.ik, T.find, T.end] });
+  const T = { v1: 0.79, philo: 1.5, bonheur: 2.75, creation: 4.57, principle: 6.81, ikigai: 7.77, pillars: 9.28, c: [11.44, 12.89, 14.36, 15.89], paid: 16.72,
+    venn: 18.23, sense: 20.28, push: [20.9, 21.86], kal: 21.88, bloom: 23.04, save: 24.89, forget: 26.53, end: 27.72, ins: 28.91, dur: 30.7 };
+  K.setup({ bars: [T.v1, T.bonheur, T.creation, T.principle, T.ikigai, ...T.c, T.venn, T.sense, T.save, T.end] });
 
   /* ---------- helpers (as the 16:9 template) ---------- */
   const q = (t) => Math.floor(t * 12 + 1e-6) / 12;
@@ -42,16 +49,20 @@
   const pc = (x, shape, fill, o) => CL.piece(x, shape, fill, Object.assign({ cache: false }, o));
   async function zoomAbout(ctx, z, fx, fy, fn) { ctx.save(); ctx.translate(fx, fy); ctx.scale(z, z); ctx.translate(-fx, -fy); await fn(); ctx.restore(); }
   const drawLayer = (ctx, L) => ctx.drawImage(L, -L.bleed, -L.bleed, L.width / L.res, L.height / L.res);
+  const popK = (t, t0) => clamp((drawingIdx(t, t0) + 1) / 3);
+  // ransom line sized to fit the 9:16 width; tags pop on twos
+  const rsize = (s, max = 140) => Math.min(max, 900 / (s.length * 1.15));
+  const ransomLine = (ctx, s, y, tq, t0, seed, o = {}) => X.ransom(ctx, s, W / 2, y, tq, t0, Object.assign({ size: rsize(s, o.max), step: 1 / 24, seed }, o));
+  const tagAt = (ctx, x, y, s, tq, t0, color, o = {}) => (tq >= t0 ? X.tag(ctx, x, y, s, Object.assign({ t: tq, t0, color, font: 'sans', size: 48, rot: -0.03, tape: 'top' }, o)) : null);
 
   /* ---------- paper icons (shapes centred on 0,0; move them with x / y) ---------- */
   const heartPts = (r) => { const p = []; for (let i = 0; i < 40; i++) { const a = i / 40 * Math.PI * 2; p.push([16 * Math.pow(Math.sin(a), 3) * r / 17, -(13 * Math.cos(a) - 5 * Math.cos(2 * a) - 2 * Math.cos(3 * a) - Math.cos(4 * a)) * r / 17 - r * 0.1, 1]); } return p; };
   const glyph = (ch, col, font, k = 1.1) => async (x, b) => { const s = b[3] * 0.62 * k; x.font = `400 ${s}px ${font}`; x.fillStyle = col; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(ch, b[0] + b[2] / 2, b[1] + b[3] / 2 + s * 0.06); };
-  const LAND = async (x, b) => { // globe: two torn olive continents on cyan
+  const LAND = async (x, b) => {
     const [bx, by, bw, bh] = b;
     await pc(x, { poly: [[bx + bw * 0.18, by + bh * 0.3, 1], [bx + bw * 0.5, by + bh * 0.18, 1], [bx + bw * 0.55, by + bh * 0.45, 1], [bx + bw * 0.32, by + bh * 0.62, 1], [bx + bw * 0.12, by + bh * 0.5, 1]] }, C.olive, { seed: 51, amp: 4, white: [1, 5], shadow: false });
     await pc(x, { poly: [[bx + bw * 0.6, by + bh * 0.58, 1], [bx + bw * 0.88, by + bh * 0.52, 1], [bx + bw * 0.8, by + bh * 0.85, 1], [bx + bw * 0.58, by + bh * 0.8, 1]] }, C.olive, { seed: 52, amp: 4, white: [1, 5], shadow: false });
   };
-  // icon(ctx, kind, x, y, r, o): heart · star · globe · coin, drawn as cached torn paper sprites
   const SHD = { dx: 8, dy: 12, blur: 12, alpha: 0.38 };
   async function icon(ctx, kind, x, y, r, o = {}) {
     const rr = Math.round(r / 10) * 10, d = { x, y, sc: (o.sc ?? 1) * r / rr, spin: o.spin || 0, px: 0, py: 0, alpha: o.alpha };
@@ -61,22 +72,23 @@
     return CL.piece(ctx, { circle: [0, 0, rr] }, { color: C.sun, brush: 0.5 }, Object.assign({ seed: 14, amp: 6, shadow: SHD, draw: glyph('€', C.earth, '"Bungee"'), key: 'coin' + rr, fx: [{ type: 'rings', color: 'rgba(168,86,42,0.35)' }] }, d));
   }
   const ICONS = ['heart', 'star', 'globe', 'coin'];
-  const CIRC = [C.red, C.cobalt, C.sky, C.sun];                // circle colour of each card (also its Venn circle)
-  const CBG = [C.pink, C.sun, C.navy, C.cobalt];               // card paper
-  const CBAND = [C.paper, C.red, C.sun, C.orange];             // card accent band
+  const ICON_COL = [C.pink, C.sun, null, null];
+  const CIRC = [C.red, C.cobalt, C.sky, C.sun];
+  const CBG = [C.pink, C.sun, C.navy, C.cobalt];
+  const CBAND = [C.paper, C.red, C.sun, C.orange];
   const TAGC = ['white', 'ink', 'yellow', 'white'];
 
   /* ---------- warm-up ---------- */
   const TEAR = { y0: Math.round(H * 0.38), y1: Math.round(H * 0.62), seed: 5, flapW: 640 };
-  const LOGO = { x: W / 2, y: Math.round((TEAR.y0 + TEAR.y1) / 2), h: 430, size: 250 };
-  const TTL = { a: 0, b: 0 };
+  const LOGO = { x: W / 2, y: Math.round((TEAR.y0 + TEAR.y1) / 2), h: 430, size: 170 };
+  const TTL = { a: 0, p: 0 };
   let WARM = null;
   const warm = () => WARM || (WARM = (async () => {
     const m = mkc(8, 8).getContext('2d'); m.font = '400 100px "Ultra"';
     const sz = (lines, frac) => 100 * (W * frac) / Math.max(1, Math.max(...lines.map((s) => [...s].reduce((a, c) => a + m.measureText(c).width, 0))));
-    TTL.a = sz(COPY.title, 0.84); TTL.b = sz(COPY.find, 0.86);
-    await X.warm({ iris: 6, kaleido: 8, title: { lines: COPY.title, size: TTL.a }, band: { h: LOGO.h, seed: 8 }, logo: { text: COPY.logo, size: LOGO.size }, tear: TEAR });
-    await X.warm({ title: { lines: COPY.find, size: TTL.b } });
+    TTL.a = sz(COPY.title, 0.84); TTL.p = sz(COPY.philo, 0.9);
+    await X.warm({ iris: 6, kaleido: 8, title: { lines: COPY.title, size: TTL.a }, band: { h: LOGO.h, seed: 8 }, logo: { text: COPY.soon, size: LOGO.size }, tear: TEAR });
+    await X.warm({ title: { lines: COPY.philo, size: TTL.p } });
   })());
 
   /* ======================================================================= transitions */
@@ -102,10 +114,89 @@
     await X.speed(ctx, t, { n: 9, angle: Math.atan2(-dy, -dx), speed: 3600, alpha: 0.9, seed: 41 + (o.seed || 0) });
   }
   const WIPES = [{ from: [1, 0], edges: [0, 0, 0, 1], seed: 4, roll: -8 }, { from: [0, 1], edges: [1, 0, 0, 0], seed: 6, roll: 5 },
-    { from: [-1, 0], edges: [0, 1, 0, 0], seed: 7, roll: 8 }, { from: [0, -1], edges: [0, 0, 1, 0], seed: 9, roll: -5 }, { from: [1, 0], edges: [0, 0, 0, 1], seed: 10, roll: -6 }];
+    { from: [-1, 0], edges: [0, 1, 0, 0], seed: 7, roll: 8 }, { from: [0, -1], edges: [0, 0, 1, 0], seed: 9, roll: -5 }];
+  const wipeN = (i) => Object.assign({}, WIPES[i % 4], { seed: WIPES[i % 4].seed + 10 * Math.floor(i / 4) });
 
-  /* ======================================================================= 0–4.56 · IKIGAI */
-  const TITLE_Y = 800;
+  /* ======================================================================= 0–2.75 · une philosophie japonaise */
+  const SUN = { x: W / 2, y: 640, r: 360 };
+  const japonLayer = () => CL.layer('japon', async (x) => {
+    await pc(x, [-150, -150, W + 300, H + 300], { color: C.paper, speck: 0.3 }, { seed: 600, amp: 2, shadow: false, news: { alpha: 0.16, angle: 0 } });
+    await pc(x, { band: [-170, 150, W + 170, 110, 120, 100] }, { color: C.navy, speck: 0.3 }, { seed: 601, amp: 10 });
+    await pc(x, { circle: [SUN.x + 24, SUN.y + 20, SUN.r + 40] }, C.news, { seed: 602, amp: 12, news: { alpha: 0.5 } });
+    await pc(x, { circle: [SUN.x, SUN.y, SUN.r] }, { color: C.red, speck: 0.3 }, { seed: 603, amp: 13, halftone: { color: 'rgba(255,230,220,0.35)', cell: 16, angle: 25, r: [0.4, 0.03], grad: [SUN.x, SUN.y + SUN.r, SUN.x, SUN.y - SUN.r] } });
+    for (let i = 0; i < 5; i++) await pc(x, { band: [-170, 1600 + i * 70, W + 170, 1560 + i * 70 - (i % 2) * 40, 40, 30] }, [C.cobalt, C.paper, C.red, C.sun, C.navy][i], { seed: 604 + i, amp: 6 });
+  });
+  async function philoScene(ctx, t) {
+    const tq = q(t);
+    await zoomAbout(ctx, 1 + 0.03 * tq, W / 2, SUN.y, async () => {
+      drawLayer(ctx, await japonLayer());
+      await tagAt(ctx, W / 2, 1110, COPY.found, tq, T.v1, 'ink', { size: 50 });
+      await X.burst(ctx, t, T.philo, { cx: W / 2, cy: 1340, n: 22, seed: 3 });
+      await X.title(ctx, COPY.philo, W / 2, 1340, tq, T.philo, { size: TTL.p, zoom: 0.02 });
+    });
+  }
+
+  /* ======================================================================= 2.75–4.57 · ta perception du bonheur */
+  const SMILE = { x: W / 2, y: 650, r: 330 };
+  const smilePts = () => { const p = [], cy = 30; for (let a = 25; a <= 155; a += 10) p.push([Math.cos(a * DEG) * 200, cy + Math.sin(a * DEG) * 200, 1]); for (let a = 155; a >= 25; a -= 10) p.push([Math.cos(a * DEG) * 150, cy + Math.sin(a * DEG) * 130, 1]); return p; };
+  const bonheurLayer = () => CL.layer('bonheur', async (x) => {
+    await pc(x, [-150, -150, W + 300, H + 300], { color: C.sky, speck: 0.2 }, { seed: 620, amp: 2, shadow: false, halftone: { color: 'rgba(255,255,255,0.35)', cell: 18, angle: 30, r: [0.05, 0.35], grad: [0, 0, 0, H] } });
+    for (let i = 0; i < 12; i++) { const a = i * 30 * DEG; await pc(x, { band: [SMILE.x + Math.cos(a) * 380, SMILE.y + Math.sin(a) * 380, SMILE.x + Math.cos(a) * 760, SMILE.y + Math.sin(a) * 760, 70, 10] }, i % 2 ? C.sun : C.orange, { seed: 630 + i, amp: 5 }); }
+    await pc(x, { band: [-170, 1300, W + 170, 1260, 520, 560] }, C.paper, { seed: 645, amp: 12, dotgrid: { cell: 24, r: 0.07, angle: 8 } });
+  });
+  async function bonheurScene(ctx, t) {
+    const tq = q(t), lt = Math.max(0, tq - T.bonheur);
+    await zoomAbout(ctx, 1 + 0.035 * lt, W / 2, SMILE.y, async () => {
+      drawLayer(ctx, await bonheurLayer());
+      const s = CL.slap(tq, T.bonheur + 2 / 12, { from: 1.4, rot0: -8 }), b = CL.bob(t, 3, 3);
+      if (s.on) {
+        const o = { x: SMILE.x + b.dx, y: SMILE.y + b.dy, sc: s.s, spin: s.rot + b.rot, px: 0, py: 0 };
+        await CL.piece(ctx, { circle: [0, 0, SMILE.r] }, { color: C.sun, brush: 0.6 }, Object.assign({ seed: 650, amp: 10, shadow: SHD, halftone: { color: 'rgba(240,122,46,0.8)', cell: 15, angle: 30, r: [0.4, 0.03], grad: [0, SMILE.r, 0, -SMILE.r] } }, o));
+        for (const ex of [-110, 110]) await CL.piece(ctx, { ellipse: [ex, -80, 34, 52] }, C.ink, Object.assign({ seed: 651 + (ex > 0), amp: 3, white: [2, 6], shadow: false }, o));
+        await CL.piece(ctx, { poly: smilePts() }, C.red, Object.assign({ seed: 653, amp: 4, white: [2, 7], shadow: false }, o));
+      }
+      await tagAt(ctx, W / 2, 1140, COPY.change, tq, T.bonheur + 1 / 12, 'cobalt');
+      await tagAt(ctx, W / 2, 1260, COPY.percep, tq, 3.5, 'white');
+      await ransomLine(ctx, COPY.bonheur, 1430, tq, 3.75, 7, { max: 130 });
+    });
+  }
+
+  /* ======================================================================= 4.57–6.81 · vivre de ta création */
+  const creaLayer = () => CL.layer('crea', async (x) => {
+    await pc(x, [-150, -150, W + 300, H + 300], { color: C.sun, speck: 0.25 }, { seed: 660, amp: 2, shadow: false });
+    await pc(x, { rect: [120, 170, 840, 880], edges: [1, 1, 1, 1] }, C.paper, { seed: 661, amp: 10, rot: -3, fx: [{ type: 'lines', color: 'rgba(22,96,218,0.25)' }] });
+    await pc(x, { band: [-170, 1330, W + 170, 1290, 520, 560] }, C.paper, { seed: 662, amp: 12, dotgrid: { cell: 24, r: 0.07, angle: 8 } });
+    await pc(x, { band: [-170, 1840, W + 170, 1760, 200, 160] }, { color: C.red, speck: 0.3 }, { seed: 663, amp: 12 });
+  });
+  // paper pencil drawing a torn red squiggle (pieces in pencil-local coords, the whole group rotated)
+  async function pencil(ctx, x, y, rot, sc) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot * DEG); ctx.scale(sc, sc);
+    const sh = { dx: 10, dy: 14, blur: 14, alpha: 0.35 };
+    await CL.piece(ctx, [-62, -300, 124, 470], { color: C.sun, brush: 0.5 }, { seed: 671, amp: 4, shadow: sh, fx: [{ type: 'stripes', color: 'rgba(233,162,27,0.6)' }] });
+    await CL.piece(ctx, [-66, -340, 132, 56], C.news, { seed: 672, amp: 3, shadow: false });
+    await CL.piece(ctx, [-62, -420, 124, 86], C.pink, { seed: 673, amp: 4, shadow: false });
+    await CL.piece(ctx, { poly: [[-62, 168, 1], [62, 168, 1], [0, 330, 1]] }, '#F2D3A2', { seed: 674, amp: 3, shadow: false });
+    await CL.piece(ctx, { poly: [[-20, 278, 1], [20, 278, 1], [0, 330, 1]] }, C.ink, { seed: 675, amp: 2, white: [1, 3], shadow: false });
+    ctx.restore();
+  }
+  async function creaScene(ctx, t) {
+    const tq = q(t), lt = Math.max(0, tq - T.creation);
+    await zoomAbout(ctx, 1 + 0.03 * lt, W / 2, 600, async () => {
+      drawLayer(ctx, await creaLayer());
+      // the squiggle grows on twos behind the pencil tip
+      const k = E.out3(prog(tq, T.creation + 2 / 12, T.creation + 1.4)), n = Math.max(2, Math.round(2 + k * 22)), pts = [];
+      for (let i = 0; i < n; i++) { const u = i / 23; pts.push([230 + u * 600, 640 + Math.sin(u * 9) * 160 - u * 120]); }
+      if (k > 0) { ctx.save(); ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = C.red; ctx.lineWidth = 26; ctx.shadowColor = 'rgba(0,0,0,0.25)'; ctx.shadowOffsetY = 5; ctx.shadowBlur = 6; ctx.beginPath(); pts.forEach((p, i) => (i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]))); ctx.stroke(); ctx.restore(); }
+      const s = CL.slap(tq, T.creation + 1 / 12, { from: 1.3, rot0: 10 }), tip = pts[pts.length - 1], b = CL.bob(t, 9, 3);
+      if (s.on) await pencil(ctx, tip[0] + 115 + b.dx, tip[1] - 300 + b.dy, 20 + s.rot, s.s * 0.95);
+      await tagAt(ctx, W / 2, 1140, COPY.will, tq, T.creation + 1 / 12, 'ink');
+      await ransomLine(ctx, COPY.create[0], 1330, tq, 5.4, 21);
+      await ransomLine(ctx, COPY.create[1], 1490, tq, 5.4 + 9 / 24, 22);
+    });
+  }
+
+  /* ======================================================================= 6.81–11.44 · IKIGAI + 4 piliers */
+  const TITLE_Y = 780;
   const openLayer = () => CL.layer('open', async (x) => {
     const B = 150;
     x.drawImage(CL.watercolor(11, { w: W + 2 * B, h: H + 2 * B, tone: 0.9, clouds: 0.55, cloudY: [0.58, 0.8], dots: 0.5, bloom: 0.6 }), -B, -B);
@@ -117,20 +208,23 @@
     await pc(x, { band: [-170, 1800, W + 170, 1650, 300, 220] }, { color: C.cobalt, speck: 0.3 }, { seed: 106, amp: 13, halftone: { color: '#0B3A92', cell: 18, angle: 20, r: [0.06, 0.42], grad: [0, 1900, 0, 1550] } });
     await pc(x, { band: [-170, 1990, W + 170, 1900, 160, 120] }, { color: C.red, speck: 0.3 }, { seed: 107, amp: 11, fx: [{ type: 'grunge', seed: 3 }] });
   });
-  const OSTARS = [[150, 520, 54, 0.33, C.sun], [930, 470, 44, 0.5, C.pink], [170, 1230, 40, 0.58, C.paper], [910, 1260, 58, 0.42, C.sun]];
-  async function openScene(ctx, t) {
-    const tq = q(t);
-    await zoomAbout(ctx, 1 + 0.025 * tq, W / 2, TITLE_Y, async () => {
+  const PIL = [[165, 1450], [405, 1430], [675, 1450], [915, 1430]];
+  async function ikigaiScene(ctx, t) {
+    const tq = q(t), lt = Math.max(0, tq - T.principle);
+    await zoomAbout(ctx, 1 + 0.02 * lt, W / 2, TITLE_Y, async () => {
       drawLayer(ctx, await openLayer());
-      for (const [x, y, r, t0, col] of OSTARS) { const s = CL.slap(tq, t0, { rot0: 12 }); if (!s.on) continue; const b = CL.bob(t, x, 3);
-        await CL.piece(ctx, { star: [0, 0, 60, 27, 5, -90] }, { color: col }, { seed: x, amp: 3, white: [2, 6], shadow: SHD, x: x + b.dx, y: y + b.dy, sc: s.s * r / 60, spin: s.rot + b.rot * 4, px: 0, py: 0 }); }
-      await X.burst(ctx, t, T.v1, { cx: W / 2, cy: TITLE_Y, n: 26, seed: 9 });
-      await X.title(ctx, COPY.title, W / 2, TITLE_Y, tq, T.v1, { size: TTL.a, zoom: 0.02 });
-      if (tq >= 2.0) await X.tag(ctx, W / 2, 1120, COPY.meaning, { t: tq, t0: 2.0, color: 'cobalt', font: 'sans', size: 50, rot: -0.03, tape: 'top' });
+      await tagAt(ctx, W / 2, 470, COPY.principle, tq, T.principle + 1 / 12, 'white', { size: 50 });
+      await X.burst(ctx, t, T.ikigai, { cx: W / 2, cy: TITLE_Y, n: 26, seed: 9 });
+      await X.title(ctx, COPY.title, W / 2, TITLE_Y, tq, T.ikigai, { size: TTL.a, zoom: 0.02 });
+      await tagAt(ctx, W / 2, 1150, COPY.pillars, tq, T.pillars + 1 / 12, 'cobalt', { size: 52 });
+      for (let i = 0; i < 4; i++) {
+        const s = CL.slap(tq, 9.75 + i * 2 / 12, { from: 1.6, rot0: i % 2 ? 10 : -10 }); if (!s.on) continue;
+        const b = CL.bob(t, 80 + i, 3); await icon(ctx, ICONS[i], PIL[i][0] + b.dx, PIL[i][1] + b.dy, 100, { sc: s.s, spin: s.rot + b.rot, color: ICON_COL[i] });
+      }
     });
   }
 
-  /* ======================================================================= 4.56–12.89 · the four circles */
+  /* ======================================================================= 11.44–18.23 · the four circles */
   const CARD_C = { x: W / 2, y: 800, r: 380 };
   const cardLayer = (i) => CL.layer('card' + i, async (x) => {
     await pc(x, [-150, -150, W + 300, H + 300], { color: CBG[i], speck: 0.25 }, { seed: 200 + i, amp: 2, shadow: false });
@@ -139,69 +233,63 @@
     await pc(x, { circle: [CARD_C.x, CARD_C.y, CARD_C.r] }, { color: CIRC[i], brush: 0.5 }, { seed: 230 + i, amp: 12, halftone: { color: 'rgba(255,255,255,0.32)', cell: 16, angle: 25, r: [0.4, 0.04], grad: [CARD_C.x, CARD_C.y + CARD_C.r, CARD_C.x, CARD_C.y - CARD_C.r] } });
     await pc(x, { band: [-170, 1330, W + 170, 1290, 560, 600] }, C.paper, { seed: 240 + i, amp: 12, dotgrid: { cell: 24, r: 0.07, angle: 8 } });
   });
-  const ICON_COL = [C.pink, C.sun, null, null];
   async function cardScene(ctx, t, i) {
     const t0 = T.c[i], tq = q(t), lt = Math.max(0, tq - t0);
     await zoomAbout(ctx, 1 + 0.03 * lt, W / 2, CARD_C.y, async () => {
       drawLayer(ctx, await cardLayer(i));
-      const s = CL.slap(tq, t0 + 3 / 12, { from: 1.5, rot0: i % 2 ? 10 : -10 });
+      const s = CL.slap(tq, t0 + 2 / 12, { from: 1.5, rot0: i % 2 ? 10 : -10 });
       if (s.on) { const b = CL.bob(t, 30 + i, 4); await icon(ctx, ICONS[i], CARD_C.x + b.dx, CARD_C.y + b.dy, 230, { sc: s.s, spin: s.rot + b.rot, color: ICON_COL[i] }); }
       await X.tag(ctx, 70, 120, `${i + 1} / 4`, { t: tq, t0: t0 + 1 / 12, color: TAGC[i], font: 'mono', size: 46, anchor: 'left', rot: -0.03, tape: 'top' });
-      // ransom lines, one after the other; the short last card drops two letters per drawing
-      const lines = COPY.cards[i], step = i === 3 ? 1 / 24 : 1 / 12;
-      let st = t0 + 5 / 12;
+      if (i === 3) await tagAt(ctx, W - 70, 120, COPY.finally, tq, t0 + 1 / 12, 'yellow', { anchor: 'right', rot: 0.03 });
+      const lines = COPY.cards[i];
+      let st = i === 3 ? T.paid : t0 + 1 / 12;
       for (let l = 0; l < lines.length; l++) {
-        const n = lines[l].replace(/ /g, '').length, size = Math.min(140, 900 / (lines[l].length * 1.15)), y = 1250 + (l - (lines.length - 1) / 2) * 175;
-        await X.ransom(ctx, lines[l], W / 2, y, tq, st, { size, step, seed: 40 + i * 5 + l });
-        st += n * step;
+        const y = 1250 + (l - (lines.length - 1) / 2) * 175;
+        await ransomLine(ctx, lines[l], y, tq, st, 40 + i * 5 + l);
+        st += lines[l].replace(/ /g, '').length / 24;
       }
     });
   }
 
-  /* ======================================================================= 12.89–18.22 · Venn → IKIGAI → push into the centre */
-  const VC = { x: W / 2, y: 1030, d: 195, r: 290 };
-  const VPOS = [[0, -1], [-1, 0], [1, 0], [0, 1]];           // aimer (top) · doué (left) · monde (right) · payé (bottom)
+  /* ======================================================================= 18.23–21.88 · équilibre (Venn) → push into the IKIGAI star */
+  const VC = { x: W / 2, y: 1000, d: 195, r: 290 };
+  const VPOS = [[0, -1], [-1, 0], [1, 0], [0, 1]];
   const vennLayer = () => CL.layer('venn', async (x) => {
     await pc(x, [-150, -150, W + 300, H + 300], { color: C.paper, speck: 0.3 }, { seed: 300, amp: 2, shadow: false, news: { alpha: 0.18, angle: 0 } });
     await pc(x, { band: [-170, 180, W + 170, 250, 260, 220] }, { color: C.navy, speck: 0.3 }, { seed: 301, amp: 12 });
-    await pc(x, { band: [-170, 1700, W + 170, 1640, 160, 130] }, { color: C.orange, brush: 0.6 }, { seed: 302, amp: 11 });
-    await pc(x, { band: [-170, 1880, W + 170, 1830, 160, 140] }, { color: C.cobalt }, { seed: 303, amp: 11, halftone: { color: '#0B3A92', cell: 16, angle: 20, r: [0.06, 0.4], grad: [0, 1950, 0, 1760] } });
+    await pc(x, { band: [-170, 1720, W + 170, 1660, 160, 130] }, { color: C.orange, brush: 0.6 }, { seed: 302, amp: 11 });
+    await pc(x, { band: [-170, 1890, W + 170, 1840, 160, 140] }, { color: C.cobalt }, { seed: 303, amp: 11, halftone: { color: '#0B3A92', cell: 16, angle: 20, r: [0.06, 0.4], grad: [0, 1950, 0, 1760] } });
   });
-  const IPOS = [[-1, -1], [1, -1], [1, 1], [-1, 1]];           // PASSION (aimer+doué) · MISSION (aimer+monde) · VOCATION (monde+payé) · PROFESSION (doué+payé)
   async function vennDraw(ctx, t) {
     const tq = q(t);
     drawLayer(ctx, await vennLayer());
-    await X.ransom(ctx, COPY.title[0], W / 2, 250, tq, T.venn, { size: 150, step: 1 / 12, seed: 61 });
-    // circles fly in from their side (3 drawings each, staggered) and overlap like tissue paper
-    for (let i = 0; i < 4; i++) {
-      const t0 = T.venn + i * 3 / 12, f = drawingIdx(t, t0); if (f < 0) continue;
+    await ransomLine(ctx, COPY.balance, 230, tq, T.venn + 1 / 12, 61, { max: 120 });
+    for (let i = 0; i < 4; i++) { // circles fly in from their side (3 drawings each, staggered) and overlap like tissue paper
+      const t0 = T.venn + 2 / 12 + i * 2 / 12, f = drawingIdx(t, t0); if (f < 0) continue;
       const k = [1, 0.42, 0.1][f] ?? 0, [vx, vy] = VPOS[i], b = CL.bob(t, 50 + i, 3), x = VC.x + vx * (VC.d + k * 1100) + b.dx, y = VC.y + vy * (VC.d + k * 1100) + b.dy;
-      ctx.save(); ctx.globalAlpha = 0.84; // overlapping like tissue paper
+      ctx.save(); ctx.globalAlpha = 0.84;
       await CL.piece(ctx, { circle: [0, 0, VC.r] }, { color: CIRC[i], brush: 0.5 }, { seed: 230 + i, amp: 10, shadow: false, x, y, spin: b.rot, px: 0, py: 0, halftone: { color: 'rgba(255,255,255,0.3)', cell: 15, angle: 25, r: [0.35, 0.04], grad: [0, VC.r, 0, -VC.r] } });
       ctx.restore();
       if (f >= 2) await icon(ctx, ICONS[i], VC.x + vx * (VC.d + 150) + b.dx, VC.y + vy * (VC.d + 150) + b.dy, 70, { spin: b.rot, color: ICON_COL[i] });
     }
-    for (let i = 0; i < 4; i++) {
-      const [ix, iy] = IPOS[i], t0 = T.inter + i * 4 / 12; if (tq < t0) continue;
-      await X.tag(ctx, VC.x + ix * 165, VC.y + iy * 165, COPY.inter[i], { t: tq, t0, color: ['white', 'yellow', 'white', 'yellow'][i], font: 'sans', size: 36, rot: [-0.06, 0.05, -0.04, 0.06][i], tape: false });
-    }
-    if (tq >= T.ik) await X.star(ctx, VC.x, VC.y, 118, t, { points: 12, inner: 0.72, color: X.PAL.yellow, text: COPY.center, seed: 5, pop: clamp((drawingIdx(t, T.ik) + 1) / 3) });
+    await tagAt(ctx, W / 2, 1590, COPY.direction, tq, 19.25, 'yellow', { size: 52 });
+    await tagAt(ctx, W / 2, 1720, COPY.sense, tq, T.sense + 1 / 12, 'white', { size: 52, rot: 0.03 });
+    if (tq >= T.sense) await X.star(ctx, VC.x, VC.y, 118, t, { points: 12, inner: 0.72, color: X.PAL.yellow, text: COPY.center, seed: 5, pop: popK(t, T.sense) });
   }
   async function vennScene(ctx, t) {
     const tq = q(t), pz = prog(tq, T.push[0], T.push[1] - 0.04), e = pz * pz, z = (1 + 0.02 * Math.max(0, tq - T.venn)) * Math.pow(46, e), m = E.inOut3(clamp(pz * 1.3));
     const sx = lerp(VC.x, W / 2, m), sy = lerp(VC.y, H / 2, m), rS = 104 * z;
     const covered = rS * 0.95 > Math.hypot(W / 2 + Math.abs(sx - W / 2), H / 2 + Math.abs(sy - H / 2)) + 40;
     if (!covered) { ctx.save(); ctx.translate(sx, sy); ctx.scale(z, z); ctx.translate(-VC.x, -VC.y); await vennDraw(ctx, t); ctx.restore(); }
-    if (tq >= T.push[0] + 4 / 12) { // a paper iris opens inside the IKIGAI star; its centre is the kaleidoscope already zooming
-      const ki = prog(tq, T.push[0] + 0.5, T.push[1] - 0.1), pop = lerp(0.55, 1, clamp(drawingIdx(t, T.push[0] + 4 / 12) / 2));
+    if (tq >= T.push[0] + 2 / 12) { // a paper iris opens inside the IKIGAI star; its centre is the kaleidoscope already zooming
+      const ki = prog(tq, T.push[0] + 0.3, T.push[1] - 0.06), pop = lerp(0.55, 1, clamp(drawingIdx(t, T.push[0] + 2 / 12) / 2));
       await X.iris(ctx, sx, sy, rS * pop, ki, t, { n: 6, spin: 1.2, drawCenter: ki > 0.12 ? async (c, cx, cy, rr, tt) => {
         const kb = await kalBuf(tt), s = rr / (Math.hypot(W, H) / 2); c.drawImage(kb, cx - (KS / 2) * s, cy - (KS / 2) * s, KS * s, KS * s);
       } : null });
     }
   }
 
-  /* ======================================================================= 18.22–21.87 · kaleidoscope */
-  // source: vertical torn bands right of the centre (x 560–1080); srcScale 2.1 stretches them over the whole disc
+  /* ======================================================================= 21.88–24.89 · kaleidoscope (t'épanouir) */
   const KSRC = () => once('ksrc', async () => {
     const c = mkc(W, H), x = c.getContext('2d');
     x.drawImage(CL.watercolor(97, { w: W, h: H, tone: 0.95, bloom: 0.1, clouds: 0, base: '#2DB8EE', light: '#8ADAF5', deep: '#1186CC' }), 0, 0);
@@ -214,38 +302,54 @@
     }
     return c;
   });
-  const HOLE = [[21 + 8 / 12, 0.34], [21.75, 0.85]];
+  const HOLE = [[24 + 8 / 12, 0.34], [24.75, 0.85]];
   const holeAt = (t) => { let h = 0; for (const [t0, v] of HOLE) if (t >= t0 - 1e-6) h = v; return h; };
-  const kOpts = (t) => ({ segments: 8, rot: 0, twist: 0, zoom: 1.6, ratio: 0.5, levels: 7, srcScale: 2.1, rims: ['red', 'yellow', 'cyan', 'dots', 'red', 'yellow'], hole: holeAt(t), drawNext: (c, tt) => findScene(c, tt), holeColor: '#F3A51C' });
+  const kOpts = (t) => ({ segments: 8, rot: 0, twist: 0, zoom: 1.6, ratio: 0.5, levels: 7, srcScale: 2.1, rims: ['red', 'yellow', 'cyan', 'dots', 'red', 'yellow'], hole: holeAt(t), drawNext: (c, tt) => saveScene(c, tt), holeColor: '#F3A51C' });
   const kalDraw = async (ctx, t) => { const tq = q(t), src = await KSRC(); await X.kaleido(ctx, tq, async (c) => c.drawImage(src, 0, 0), kOpts(tq)); };
   const KS = Math.ceil(Math.hypot(W, H)) + 8;
   async function kalBuf(t) { const cv = buf('kal', KS, KS), x = cv.getContext('2d'); x.translate((KS - W) / 2, (KS - H) / 2); await kalDraw(x, t); return cv; }
+  async function kalScene(ctx, t) {
+    await kalDraw(ctx, t);
+    const tq = q(t); if (tq >= HOLE[0][0]) return; // the words leave with the hex hole
+    await tagAt(ctx, W / 2, 560, COPY.fully, tq, T.kal + 1 / 12, 'white', { size: 64 });
+    await ransomLine(ctx, COPY.bloom, 960, tq, T.bloom + 1 / 12, 91, { max: 120, step: 1 / 12 });
+    await tagAt(ctx, W / 2, 1180, COPY.projects, tq, 23.75, 'yellow', { size: 50, rot: 0.03 });
+  }
 
-  /* ======================================================================= 21.87–27.72 · TROUVE TON IKIGAI */
-  const FIND_Y = 760;
-  const findLayer = () => CL.layer('find', async (x) => {
-    await pc(x, [-150, -150, W + 300, H + 300], { color: C.cobalt, speck: 0.3 }, { seed: 400, amp: 2, shadow: false, halftone: { color: '#0B3A92', cell: 20, angle: 20, r: [0.05, 0.4], grad: [0, 0, 0, H] } });
-    await pc(x, { rect: [-60, FIND_Y - 360, W + 120, 700], edges: [1, 0, 1, 0] }, { color: C.sun, brush: 0.6 }, { seed: 401, amp: 14, rot: -3, halftone: { color: 'rgba(240,122,46,0.75)', cell: 16, angle: 30, r: [0.38, 0.03], grad: [0, FIND_Y + 340, 0, FIND_Y - 340] } });
-    await pc(x, { band: [-170, 300, W + 170, 220, 70, 50] }, C.red, { seed: 402, amp: 7 });
-    await pc(x, { band: [-170, 1290, W + 170, 1210, 60, 46] }, C.paper, { seed: 403, amp: 7, news: { alpha: 0.5 } });
-    await pc(x, { band: [-170, 1990, W + 170, 1880, 200, 160] }, { color: C.pink }, { seed: 404, amp: 12, dotgrid: { cell: 22, r: 0.1 } });
+  /* ======================================================================= 24.89–27.72 · enregistre cette vidéo */
+  const BM = { x: W / 2, y: 610 };
+  const bmPts = [[-170, -260, 1], [170, -260, 1], [170, 260, 1], [0, 130, 1], [-170, 260, 1]];
+  const T_CLICK = 25.92;
+  const saveLayer = () => CL.layer('save', async (x) => {
+    await pc(x, [-150, -150, W + 300, H + 300], { color: C.pink, speck: 0.25 }, { seed: 700, amp: 2, shadow: false, dotgrid: { cell: 26, r: 0.08, angle: 15 } });
+    await pc(x, { circle: [BM.x, BM.y, 400] }, { color: C.cobalt }, { seed: 701, amp: 12, halftone: { color: '#0B3A92', cell: 16, angle: 20, r: [0.06, 0.4], grad: [BM.x, BM.y - 400, BM.x, BM.y + 400] } });
+    await pc(x, { band: [-170, 1330, W + 170, 1290, 520, 560] }, C.paper, { seed: 702, amp: 12, dotgrid: { cell: 24, r: 0.07, angle: 8 } });
+    await pc(x, { band: [-170, 1860, W + 170, 1790, 190, 150] }, { color: C.sun, brush: 0.6 }, { seed: 703, amp: 12 });
   });
-  const FICONS = [[250, 1460, 150, -10], [830, 1450, 150, 9], [260, 1730, 140, 7], [820, 1720, 140, -8]];
-  async function findScene(ctx, t) {
-    const tq = q(t), lt = Math.max(0, tq - T.find);
-    await zoomAbout(ctx, 1 + 0.02 * lt, W / 2, 1100, async () => {
-      drawLayer(ctx, await findLayer());
-      await X.burst(ctx, t, T.find, { cx: W / 2, cy: FIND_Y, n: 26, seed: 19 });
-      await X.title(ctx, COPY.find, W / 2, FIND_Y, tq, T.find, { size: TTL.b, zoom: 0.015 });
-      for (let i = 0; i < 4; i++) {
-        const [x, y, r, rot] = FICONS[i], s = CL.slap(tq, T.icons + i * 3 / 12, { from: 1.5, rot0: rot }); if (!s.on) continue;
-        const b = CL.bob(t, 70 + i, 4); await icon(ctx, ICONS[i], x + b.dx, y + b.dy, r, { sc: s.s, spin: rot * 0.5 + s.rot + b.rot, color: ICON_COL[i] });
+  async function saveScene(ctx, t) {
+    const tq = q(t), lt = Math.max(0, tq - T.save);
+    await zoomAbout(ctx, 1 + 0.025 * lt, W / 2, BM.y, async () => {
+      drawLayer(ctx, await saveLayer());
+      const clicked = tq >= T_CLICK;
+      if (t >= T_CLICK && t < T_CLICK + 2 / 24) await X.star(ctx, BM.x, BM.y, 380, t, { points: 14, inner: 0.62, color: X.PAL.yellow, seed: 3, pop: 1 });
+      const s = CL.slap(tq, T.save + 1 / 12, { from: 1.4, rot0: -8 }), sq = clicked && tq < T_CLICK + 2 / 12 ? 0.93 : 1;
+      if (s.on) { const b = CL.bob(t, 7, 3);
+        await CL.piece(ctx, { poly: bmPts }, clicked ? { color: C.red, speck: 0.3 } : C.paper, { seed: clicked ? 711 : 710, amp: 6, shadow: SHD, x: BM.x + b.dx, y: BM.y + b.dy, sc: s.s * sq, spin: s.rot + b.rot, px: 0, py: 0,
+          halftone: clicked ? { color: 'rgba(255,220,210,0.4)', cell: 14, angle: 25, r: [0.4, 0.04], grad: [0, -260, 0, 260] } : undefined, dotgrid: clicked ? undefined : { cell: 20, r: 0.1 } }); }
+      if (clicked) await X.confetti(ctx, t, T_CLICK, { x: BM.x, y: BM.y, n: 28, speed: 1400, spread: Math.PI * 2, gravity: 1200, dur: 0.9, seed: 33 });
+      await tagAt(ctx, W / 2, 1050, COPY.dont, tq, T.save + 1 / 12, 'white');
+      await ransomLine(ctx, COPY.save[0], 1220, tq, 25.25, 31);
+      await ransomLine(ctx, COPY.save[1], 1380, tq, 25.25 + 11 / 24, 32);
+      await tagAt(ctx, W / 2, 1580, COPY.forget, tq, T.forget + 1 / 12, 'yellow', { size: 52, rot: 0.03 });
+      if (tq >= 25.5 && tq < 26.5) { // cursor glides in, clicks the bookmark, slides off
+        const a = E.out3(prog(tq, 25.5, 25.84)), o = prog(tq, 26.1, 26.45);
+        const x = lerp(W + 100, BM.x + 60, a) + o * 600, y = lerp(900, BM.y + 40, a) + o * 200;
+        await X.cursor(ctx, x, y, t, { size: 130, click: t >= T_CLICK && t < T_CLICK + 2 / 24 ? 1 : 0 });
       }
-      if (tq >= T.icons) await X.confetti(ctx, t, T.icons, { x: W / 2, y: 1580, n: 26, speed: 1300, spread: Math.PI * 1.2, gravity: 1300, dur: 0.95, seed: 28 });
     });
   }
 
-  /* ======================================================================= 27.72–30.7 · tear → ikigai band */
+  /* ======================================================================= 27.72–30.7 · tear → « à très vite ! » */
   function vnoise(seed) { const r = ENG.rng(seed * 7 + 3), N = 1024, v = new Float32Array(N); for (let i = 0; i < N; i++) v[i] = r() * 2 - 1; return (x) => { x = ((x % N) + N) % N; const i = Math.floor(x), f = x - i, s = f * f * (3 - 2 * f); return v[i] + (v[(i + 1) % N] - v[i]) * s; }; }
   function fbm(seed) { const a = vnoise(seed), b = vnoise(seed + 17), c = vnoise(seed + 29); return (x) => a(x) * 0.58 + b(x * 2.17 + 5.3) * 0.29 + c(x * 4.73 + 1.1) * 0.13; }
   const TEARDONE = (() => { // the completed tear, same geometry as CLX.tear's kit
@@ -266,14 +370,15 @@
   async function endScene(ctx, t) {
     const tq = q(t), z = 1 + 0.02 * Math.max(0, tq - 28.2);
     await zoomAbout(ctx, z, W / 2, LOGO.y, async () => {
-      const under = async (c) => { await findScene(c, t); await X.logoBand(c, COPY.logo, t, { style: 'band', x: LOGO.x, y: LOGO.y, h: LOGO.h, size: LOGO.size, seed: 8, boil: true }); };
-      if (tq < 28.2) await X.tear(ctx, prog(tq, T.end - 1 / 12, 28.2), async (c) => findScene(c, t), under, TEAR);
-      else { const A = buf('tover'); await findScene(A.getContext('2d'), t); const B = buf('tunder'); await under(B.getContext('2d')); tearDone(ctx, A, B); }
-      // TA RAISON D'ÊTRE on a paper sheet that slaps over the title area
-      const s = CL.slap(tq, 28.25, { from: 1.3, rot0: -5 });
-      if (s.on) await CL.piece(ctx, [-480, -220, 960, 440], { color: C.paper, speck: 0.2 }, { seed: 500, amp: 10, shadow: { dx: 10, dy: 16, blur: 20, alpha: 0.45 }, x: W / 2, y: 380, sc: s.s, spin: -2 + s.rot, px: 0, py: 0 });
-      for (let l = 0; l < 2; l++) await X.ransom(ctx, COPY.end[l], W / 2, 310 + l * 140, tq, 28.42 + l * 9 / 12, { size: 100, step: 1 / 12, seed: 81 + l });
-      if (tq >= 29.0) await X.star(ctx, 870, 1370, 90, t, { points: 12, inner: 0.7, color: X.PAL.red, seed: 6, pop: clamp((drawingIdx(t, 29.0) + 1) / 3), spin: 0.5 });
+      const under = async (c) => { await saveScene(c, t); await X.logoBand(c, COPY.soon, t, { style: 'band', x: LOGO.x, y: LOGO.y, h: LOGO.h, size: LOGO.size, seed: 8, boil: true }); };
+      if (tq < 28.2) await X.tear(ctx, prog(tq, T.end - 1 / 12, 28.2), async (c) => saveScene(c, t), under, TEAR);
+      else { const A = buf('tover'); await saveScene(A.getContext('2d'), t); const B = buf('tunder'); await under(B.getContext('2d')); tearDone(ctx, A, B); }
+      // « pour de nouvelles inspirations » on a paper sheet that slaps over the lower half
+      const s = CL.slap(tq, T.ins, { from: 1.3, rot0: 5 });
+      if (s.on) await CL.piece(ctx, [-540, -300, 1080, 600], { color: C.paper, speck: 0.2 }, { seed: 500, amp: 10, shadow: { dx: 10, dy: 16, blur: 20, alpha: 0.45 }, x: W / 2, y: 1480, sc: s.s, spin: 2 + s.rot, px: 0, py: 0 });
+      await tagAt(ctx, W / 2, 1420, COPY.newIns, tq, T.ins + 1 / 12, 'cobalt', { size: 50 });
+      await ransomLine(ctx, COPY.insp, 1590, tq, T.ins + 4 / 12, 82, { step: 1 / 12 });
+      if (tq >= 29.75) await X.star(ctx, 900, 1330, 80, t, { points: 12, inner: 0.7, color: X.PAL.yellow, seed: 6, pop: popK(t, 29.75), spin: 0.5 });
     });
   }
 
@@ -285,14 +390,13 @@
     await zoomAbout(ctx, z, W / 2, H / 2, () => draw(ctx, t));
   } });
   const card = (i) => (c, t) => cardScene(c, t, i);
-  Cut(0, T.c[0], openScene);
-  Cut(T.c[0], T.c[1], (ctx, t) => wipe(ctx, t, T.c[0], openScene, card(0), WIPES[0]));
-  Cut(T.c[1], T.c[2], (ctx, t) => wipe(ctx, t, T.c[1], card(0), card(1), WIPES[1]));
-  Cut(T.c[2], T.c[3], (ctx, t) => wipe(ctx, t, T.c[2], card(1), card(2), WIPES[2]));
-  Cut(T.c[3], T.venn, (ctx, t) => wipe(ctx, t, T.c[3], card(2), card(3), WIPES[3]));
-  Cut(T.venn, T.kal, (ctx, t) => wipe(ctx, t, T.venn, card(3), vennScene, WIPES[4]));
-  Cut(T.kal, T.find, kalDraw);
-  Cut(T.find, T.end, findScene);
+  const SEQ = [[0, philoScene], [T.bonheur, bonheurScene], [T.creation, creaScene], [T.principle, ikigaiScene], [T.c[0], card(0)], [T.c[1], card(1)], [T.c[2], card(2)], [T.c[3], card(3)], [T.venn, vennScene]];
+  SEQ.forEach(([t0, fn], i) => {
+    const t1 = i + 1 < SEQ.length ? SEQ[i + 1][0] : T.kal;
+    if (i === 0) Cut(t0, t1, fn); else Cut(t0, t1, (ctx, t) => wipe(ctx, t, t0, SEQ[i - 1][1], fn, wipeN(i - 1)));
+  });
+  Cut(T.kal, T.save, kalScene);
+  Cut(T.save, T.end, saveScene);
   Cut(T.end, T.dur, endScene);
 
   window.SCENES = { duration: T.dur, cuts, overlay: async (ctx, t) => { CL.printGrain(ctx, t, 0.05); } };
