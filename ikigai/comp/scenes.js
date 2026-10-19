@@ -377,7 +377,7 @@
       const s = CL.slap(tq, T.ins, { from: 1.3, rot0: 5 });
       if (s.on) await CL.piece(ctx, [-540, -300, 1080, 600], { color: C.paper, speck: 0.2 }, { seed: 500, amp: 10, shadow: { dx: 10, dy: 16, blur: 20, alpha: 0.45 }, x: W / 2, y: 1480, sc: s.s, spin: 2 + s.rot, px: 0, py: 0 });
       await tagAt(ctx, W / 2, 1420, COPY.newIns, tq, T.ins + 1 / 12, 'cobalt', { size: 50 });
-      await ransomLine(ctx, COPY.insp, 1590, tq, T.ins + 4 / 12, 82, { step: 1 / 12 });
+      await ransomLine(ctx, COPY.insp, 1590, tq, T.ins + 3 / 12, 82);
       if (tq >= 29.75) await X.star(ctx, 900, 1330, 80, t, { points: 12, inner: 0.7, color: X.PAL.yellow, seed: 6, pop: popK(t, 29.75), spin: 0.5 });
     });
   }
