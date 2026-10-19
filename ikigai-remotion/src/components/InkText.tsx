@@ -46,7 +46,9 @@ export const InkText: React.FC<Props> = ({text, size, start, dur = 20, exitAt = 
         fontWeight: 800,
         fontSize: size,
         lineHeight: 0.84,
-        letterSpacing: '-0.045em',
+        // très serré en grande taille, plus ouvert en petite taille pour que les mots respirent
+        letterSpacing: size >= 140 ? '-0.045em' : size >= 90 ? '-0.035em' : size >= 70 ? '-0.022em' : '-0.01em',
+        wordSpacing: size < 90 ? '0.1em' : '0.04em',
         textTransform: 'uppercase',
         whiteSpace: 'nowrap',
         color: gradient ? 'transparent' : color,

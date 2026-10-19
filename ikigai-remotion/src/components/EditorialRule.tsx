@@ -16,7 +16,7 @@ interface Props {
 }
 
 /** « une série de ——— épisode un » : le filet se dessine de gauche à droite entre deux petits mots. */
-export const EditorialRule: React.FC<Props> = ({left, right, width, start, size = 30, exitAt = Infinity, exitDur = 14}) => {
+export const EditorialRule: React.FC<Props> = ({left, right, width, start, size = 36, exitAt = Infinity, exitDur = 14}) => {
   const frame = useCurrentFrame();
   const pl = ramp(frame, start, 16);
   const line = ramp(frame, start + 6, 26);

@@ -1,11 +1,12 @@
 import React from 'react';
 import {AbsoluteFill, Sequence, useCurrentFrame} from 'remotion';
 import {SEQUENCES} from './config';
+import {AudioLayer} from './components/AudioLayer';
 import {PaperBackground} from './components/PaperBackground';
 import {lightAt} from './lib/light';
 import {SEQUENCE_COMPONENTS} from './sequences';
 
-/** Composition principale : fond papier commun + séquences qui se chevauchent pour les transitions. */
+/** Composition principale : fond papier commun, séquences qui se chevauchent pour les transitions, audio. */
 export const Main: React.FC = () => {
   const frame = useCurrentFrame();
   return (
@@ -20,6 +21,7 @@ export const Main: React.FC = () => {
           </Sequence>
         );
       })}
+      <AudioLayer />
     </AbsoluteFill>
   );
 };
