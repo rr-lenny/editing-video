@@ -33,18 +33,18 @@ export const THEME = {
   paperCenter: '#F5F5F3',
   paperMid: '#EEEEEB',
   paperEdge: '#E4E4E1',
-  paperDeep: '#E0DFD9', // ombres du dégradé de fond (fond léger)
-  gridOpacity: 0.025,
+  paperDeep: '#D2D2CC', // ombres du dégradé de fond
+  gridOpacity: 0.065,
   grainOpacity: 0.045,
 } as const;
 
-/** Fond : style « journal » léger et animé. */
+/** Fond : papier vivant en dégradé + mots fantômes (le style « journal » reste disponible). */
 export const BACKGROUND = {
-  newspaper: true,
+  newspaper: false,
   /** opacité des colonnes d'articles du journal */
   newspaperOpacity: 0.2,
   /** grands mots contourés derrière les scènes */
-  ghostWords: false,
+  ghostWords: true,
 } as const;
 
 /* ------------------------------------------------------------------ */
