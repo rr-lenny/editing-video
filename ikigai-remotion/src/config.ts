@@ -22,14 +22,14 @@ export const SAFE = {top: 250, bottom: 400, right: 150, left: 0} as const;
 export const TYPE_COLUMN = {left: 110, width: 800} as const;
 
 export const THEME = {
-  /** Seule couleur de la vidéo : vermillon « torii ». */
-  text: '#C9412D', // corps du texte, plus profond pour la lecture sur papier clair
-  glow: '#E5533D', // halo lumineux
+  /** Seule couleur de la vidéo : violet lumineux. */
+  text: '#6236CF', // corps du texte, plus profond pour la lecture sur papier clair
+  glow: '#8C6CF2', // halo lumineux
   ink: '#1F1F1F', // noir d'encre adouci (jamais de noir pur)
   inkSoft: '#3A3A3A', // micro-légendes
   /** dégradés des titres « encre » (haut → bas) */
   inkGradient: ['#1F1F1F', '#8A8A86'],
-  textGradient: ['#A8301E', '#F28A6C'],
+  textGradient: ['#4A22B0', '#A88CF8'],
   paperCenter: '#F5F5F3',
   paperMid: '#EEEEEB',
   paperEdge: '#E4E4E1',
@@ -523,13 +523,9 @@ export interface SfxSpec {
   role: string;
 }
 
-/** 7 SFX, tous placés dans des respirations de la voix. */
-export const SFX: SfxSpec[] = [
-  {file: 'sfx/paper-flutter.mp3', at: 0.05, trimBefore: 0, duration: 0.6, volume: 0.35, role: 'Hook'},
-  {file: 'sfx/soft-tick.mp3', at: 4.4, trimBefore: 0, duration: 0.35, volume: 0.25, role: 'Changement de séquence (création)'},
-  {file: 'sfx/soft-whoosh.mp3', at: 7.55, trimBefore: 0.25, duration: 0.85, volume: 0.3, role: 'Révélation IKIGAI'},
-  {file: 'sfx/page-flip.mp3', at: 11.05, trimBefore: 0.2, duration: 0.6, volume: 0.4, role: 'Ouverture des 4 piliers'},
-  {file: 'sfx/wind-swoosh.mp3', at: 17.82, trimBefore: 1.4, duration: 1.6, volume: 0.25, role: "Changement d'acte"},
-  {file: 'sfx/soft-riser.mp3', at: 23.55, trimBefore: 5.6, duration: 1.3, volume: 0.25, role: 'Montée avant le CTA'},
-  {file: 'sfx/paper-flutter.mp3', at: 27.45, trimBefore: 7.4, duration: 0.6, volume: 0.3, role: 'Retour / boucle'},
-];
+/**
+ * SFX : aucun pour cette vidéo (voix off seule).
+ * Pour en remettre, ajouter des entrées, ex. :
+ * {file: 'sfx/soft-whoosh.mp3', at: 7.55, trimBefore: 0.25, duration: 0.85, volume: 0.3, role: 'Révélation IKIGAI'}
+ */
+export const SFX: SfxSpec[] = [];
