@@ -49,7 +49,9 @@ export const ParticleRain: React.FC<ParticleConfig & { layer?: 'all' | 'back' | 
     const v = speed * (0.6 + z * 0.9);
     const y0 = r('y') * span;
     const y = ((((y0 + v * t) % span) + span) % span) - 300;
-    const x = r('x') * (W + 200) - 100 + Math.sin(t / (16 + r('w') * 14) + r('p') * 6.28) * (30 + 50 * r('a'));
+    // Les particules proches restent sur les bords (partiellement hors champ) pour ne jamais masquer le texte.
+    const x0 = near ? (r('x') < 0.5 ? -60 + r('e') * 200 : W - 140 + r('e') * 200) : r('x') * (W + 200) - 100;
+    const x = x0 + Math.sin(t / (16 + r('w') * 14) + r('p') * 6.28) * (30 + 50 * r('a'));
     const rot = r('r') * 360 + t * (r('rs') - 0.5) * 6;
     const flip = Math.cos(t / (10 + r('f') * 10) + r('p') * 6.28); // flottement 3D
     const isAccent = r('c') < accentRatio;
