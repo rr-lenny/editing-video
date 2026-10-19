@@ -33,8 +33,9 @@ export const THEME = {
   paperCenter: '#F5F5F3',
   paperMid: '#EEEEEB',
   paperEdge: '#E4E4E1',
-  gridOpacity: 0.05,
-  grainOpacity: 0.035,
+  paperDeep: '#D2D2CC', // ombres du dégradé de fond
+  gridOpacity: 0.065,
+  grainOpacity: 0.045,
 } as const;
 
 /* ------------------------------------------------------------------ */
@@ -145,6 +146,8 @@ export interface SequenceSpec {
   voice: string;
   /** centre de la lumière du papier (suit le sujet) */
   light: [number, number];
+  /** typographie fantôme : grand mot contouré qui glisse derrière la scène */
+  ghost?: {text: string; y: number};
   type?: CompositionSpec;
   images?: Record<string, ImagePlacement>;
 }
@@ -153,6 +156,7 @@ export const SEQUENCES: SequenceSpec[] = [
   {
     id: 'S01',
     name: 'Hook : philosophie japonaise',
+    ghost: {text: 'Découverte', y: 1520},
     from: 0,
     duration: 79,
     overlap: 15,
@@ -174,6 +178,7 @@ export const SEQUENCES: SequenceSpec[] = [
   {
     id: 'S02',
     name: 'Perception du bonheur',
+    ghost: {text: 'Bonheur', y: 1180},
     from: 79,
     duration: 53,
     overlap: 15,
@@ -200,6 +205,7 @@ export const SEQUENCES: SequenceSpec[] = [
   {
     id: 'S03',
     name: 'Vivre de ta création',
+    ghost: {text: 'Création', y: 1560},
     from: 132,
     duration: 65,
     overlap: 15,
@@ -219,6 +225,7 @@ export const SEQUENCES: SequenceSpec[] = [
   {
     id: 'S04',
     name: 'Révélation IKIGAI',
+    ghost: {text: 'Ikigai', y: 1440},
     from: 197,
     duration: 72,
     overlap: 15,
@@ -238,6 +245,7 @@ export const SEQUENCES: SequenceSpec[] = [
   {
     id: 'S05',
     name: '4 piliers',
+    ghost: {text: 'Piliers', y: 1660},
     from: 269,
     duration: 67,
     overlap: 15,
@@ -270,6 +278,7 @@ export const SEQUENCES: SequenceSpec[] = [
   {
     id: 'S06',
     name: 'Pilier 1 : aimer',
+    ghost: {text: 'Passion', y: 1560},
     from: 336,
     duration: 44,
     overlap: 12,
@@ -289,6 +298,7 @@ export const SEQUENCES: SequenceSpec[] = [
   {
     id: 'S07',
     name: 'Pilier 2 : doué',
+    ghost: {text: 'Talent', y: 1640},
     from: 380,
     duration: 43,
     overlap: 12,
@@ -308,6 +318,7 @@ export const SEQUENCES: SequenceSpec[] = [
   {
     id: 'S08',
     name: 'Pilier 3 : besoin',
+    ghost: {text: 'Mission', y: 880},
     from: 423,
     duration: 48,
     overlap: 12,
@@ -327,6 +338,7 @@ export const SEQUENCES: SequenceSpec[] = [
   {
     id: 'S09',
     name: 'Pilier 4 : payé',
+    ghost: {text: 'Profession', y: 820},
     from: 471,
     duration: 68,
     overlap: 15,
@@ -357,6 +369,7 @@ export const SEQUENCES: SequenceSpec[] = [
   {
     id: 'S10',
     name: 'Équilibre / direction',
+    ghost: {text: 'Équilibre', y: 1600},
     from: 539,
     duration: 66,
     overlap: 15,
@@ -382,6 +395,7 @@ export const SEQUENCES: SequenceSpec[] = [
   {
     id: 'S11',
     name: 'Du sens à ta vie',
+    ghost: {text: 'Sens', y: 1380},
     from: 605,
     duration: 46,
     overlap: 12,
@@ -400,6 +414,7 @@ export const SEQUENCES: SequenceSpec[] = [
   {
     id: 'S12',
     name: "T'épanouir",
+    ghost: {text: 'Épanouir', y: 880},
     from: 651,
     duration: 89,
     overlap: 15,
@@ -419,6 +434,7 @@ export const SEQUENCES: SequenceSpec[] = [
   {
     id: 'S13',
     name: 'CTA : enregistre',
+    ghost: {text: 'Enregistre', y: 1420},
     from: 740,
     duration: 86,
     overlap: 15,
@@ -437,6 +453,7 @@ export const SEQUENCES: SequenceSpec[] = [
   {
     id: 'S14',
     name: 'Fin / boucle',
+    ghost: {text: 'Inspiration', y: 1520},
     from: 826,
     duration: 95,
     overlap: 0,
