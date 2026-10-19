@@ -13,6 +13,8 @@ interface Props {
   exitAt?: number;
   exitDur?: number;
   color?: string;
+  /** dégradé vertical dans les lettres (haut → bas) ; remplace `color` */
+  gradient?: readonly [string, string];
   /** graine du grain d'usure (varie d'un mot à l'autre) */
   seed?: number;
   style?: React.CSSProperties;
@@ -24,7 +26,7 @@ interface Props {
  * et petites usures d'impression. À l'apparition, l'encre « s'imprègne » : le mot
  * arrive flou et rugueux puis se pose net, et le halo d'encre s'étend doucement.
  */
-export const InkText: React.FC<Props> = ({text, size, start, dur = 20, exitAt = Infinity, exitDur = 14, color = THEME.ink, seed = 3, style}) => {
+export const InkText: React.FC<Props> = ({text, size, start, dur = 20, exitAt = Infinity, exitDur = 14, color = THEME.ink, gradient, seed = 3, style}) => {
   const frame = useCurrentFrame();
   const id = svgId(`ink-${useId()}`);
   const p = ramp(frame, start, dur, EASE);
@@ -47,7 +49,15 @@ export const InkText: React.FC<Props> = ({text, size, start, dur = 20, exitAt = 
         letterSpacing: '-0.045em',
         textTransform: 'uppercase',
         whiteSpace: 'nowrap',
-        color,
+        color: gradient ? 'transparent' : color,
+        ...(gradient
+          ? {
+              // le dégradé couvre la hauteur des capitales (padding compris)
+              backgroundImage: `linear-gradient(175deg, ${gradient[0]} 28%, ${gradient[1]} 78%)`,
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+            }
+          : {}),
         padding: '0.2em 0.25em',
         margin: '-0.2em -0.25em',
         opacity: p * (1 - e),

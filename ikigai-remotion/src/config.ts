@@ -27,6 +27,9 @@ export const THEME = {
   glow: '#E5533D', // halo lumineux
   ink: '#1F1F1F', // noir d'encre adouci (jamais de noir pur)
   inkSoft: '#3A3A3A', // micro-légendes
+  /** dégradés des titres « encre » (haut → bas) */
+  inkGradient: ['#1F1F1F', '#8A8A86'],
+  textGradient: ['#A8301E', '#F28A6C'],
   paperCenter: '#F5F5F3',
   paperMid: '#EEEEEB',
   paperEdge: '#E4E4E1',
@@ -156,12 +159,12 @@ export const SEQUENCES: SequenceSpec[] = [
     voice: "J'ai découvert une philosophie japonaise",
     light: [520, 1020],
     type: {
-      top: 380,
+      top: 350,
       lines: [
         {align: 'left', dx: 6, items: [{kind: 'caption', text: "J'ai découvert", at: 1.0}]},
-        {align: 'left', dx: 190, mt: 26, items: [{text: 'une', role: 'ink', size: 118, at: 0, tone: 'ink'}]},
-        {align: 'left', dx: -30, mt: -6, items: [{text: 'philosophie', role: 'ink', size: 112, at: 0.1, tone: 'ink'}]},
-        {align: 'right', dx: 0, mt: -6, items: [{text: 'japonaise', role: 'ink', size: 134, at: 0.23, key: true}]},
+        {align: 'left', dx: 190, mt: 30, items: [{text: 'une', role: 'ink', size: 118, at: 0, tone: 'ink'}]},
+        {align: 'left', dx: -30, mt: 22, items: [{text: 'philosophie', role: 'ink', size: 112, at: 0.1, tone: 'ink'}]},
+        {align: 'right', dx: 0, mt: 22, items: [{text: 'japonaise', role: 'ink', size: 134, at: 0.23, key: true}]},
       ],
     },
     images: {

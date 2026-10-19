@@ -55,6 +55,7 @@ const Word: React.FC<WordProps> = ({w, start, exitAt, exitDur}) => {
         exitAt={exitAt}
         exitDur={exitDur}
         color={w.tone === 'ink' ? THEME.ink : THEME.text}
+        gradient={w.tone === 'ink' ? THEME.inkGradient : THEME.textGradient}
         seed={w.text.length * 7 + Math.round(w.size)}
         style={{zIndex: w.z ?? 1, translate: `${w.dx ?? 0}px ${w.dy ?? 0}px`}}
       />
