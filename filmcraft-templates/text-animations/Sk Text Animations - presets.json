@@ -1,0 +1,1012 @@
+{
+  "format": "filmcraft.effect-presets",
+  "presets": [
+    {
+      "description": "Monte en apparaissant / continue de monter en disparaissant",
+      "effects": [
+        {
+          "effect": "transform",
+          "enabled": true,
+          "params": {
+            "anchor": {
+              "value": {
+                "Vec2": {
+                  "x": 960.0,
+                  "y": 540.0
+                }
+              }
+            },
+            "opacity": {
+              "keyframes": [
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "Linear",
+                  "out_influence": 0.3333333333333333,
+                  "time": 0,
+                  "value": {
+                    "Float": 0.0
+                  }
+                },
+                {
+                  "in_influence": 0.9,
+                  "interp": "EaseIn",
+                  "out_influence": 0.3333333333333333,
+                  "time": 177811200000,
+                  "value": {
+                    "Float": 100.0
+                  }
+                }
+              ],
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "position": {
+              "keyframes": [
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "Linear",
+                  "out_influence": 0.3333333333333333,
+                  "time": 0,
+                  "value": {
+                    "Vec2": {
+                      "x": 960.0,
+                      "y": 610.0
+                    }
+                  }
+                },
+                {
+                  "in_influence": 0.9,
+                  "interp": "EaseIn",
+                  "out_influence": 0.3333333333333333,
+                  "time": 177811200000,
+                  "value": {
+                    "Vec2": {
+                      "x": 960.0,
+                      "y": 540.0
+                    }
+                  }
+                }
+              ],
+              "value": {
+                "Vec2": {
+                  "x": 960.0,
+                  "y": 610.0
+                }
+              }
+            },
+            "rotation": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "scale_height": {
+              "value": {
+                "Float": 100.0
+              }
+            },
+            "scale_width": {
+              "value": {
+                "Float": 100.0
+              }
+            },
+            "shutter_angle": {
+              "value": {
+                "Float": 180.0
+              }
+            },
+            "shutter_override": {
+              "value": {
+                "Bool": false
+              }
+            },
+            "skew": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "skew_axis": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "uniform_scale": {
+              "value": {
+                "Bool": true
+              }
+            }
+          }
+        }
+      ],
+      "keyframes": "AnchorToIn",
+      "name": "Sk Slide Up In",
+      "source_duration": 1270080000000,
+      "source_size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "description": "Zoom doux avec fondu",
+      "effects": [
+        {
+          "effect": "transform",
+          "enabled": true,
+          "params": {
+            "anchor": {
+              "value": {
+                "Vec2": {
+                  "x": 960.0,
+                  "y": 540.0
+                }
+              }
+            },
+            "opacity": {
+              "keyframes": [
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "Linear",
+                  "out_influence": 0.3333333333333333,
+                  "time": 0,
+                  "value": {
+                    "Float": 0.0
+                  }
+                },
+                {
+                  "in_influence": 0.9,
+                  "interp": "EaseIn",
+                  "out_influence": 0.3333333333333333,
+                  "time": 177811200000,
+                  "value": {
+                    "Float": 100.0
+                  }
+                }
+              ],
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "position": {
+              "value": {
+                "Vec2": {
+                  "x": 960.0,
+                  "y": 540.0
+                }
+              }
+            },
+            "rotation": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "scale_height": {
+              "keyframes": [
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "Linear",
+                  "out_influence": 0.3333333333333333,
+                  "time": 0,
+                  "value": {
+                    "Float": 70.0
+                  }
+                },
+                {
+                  "in_influence": 0.9,
+                  "interp": "EaseIn",
+                  "out_influence": 0.3333333333333333,
+                  "time": 177811200000,
+                  "value": {
+                    "Float": 100.0
+                  }
+                }
+              ],
+              "value": {
+                "Float": 70.0
+              }
+            },
+            "scale_width": {
+              "value": {
+                "Float": 100.0
+              }
+            },
+            "shutter_angle": {
+              "value": {
+                "Float": 180.0
+              }
+            },
+            "shutter_override": {
+              "value": {
+                "Bool": false
+              }
+            },
+            "skew": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "skew_axis": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "uniform_scale": {
+              "value": {
+                "Bool": true
+              }
+            }
+          }
+        }
+      ],
+      "keyframes": "AnchorToIn",
+      "name": "Sk Smooth Zoom In",
+      "source_duration": 1270080000000,
+      "source_size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "description": "Sort du flou / retourne dans le flou",
+      "effects": [
+        {
+          "effect": "gaussian_blur",
+          "enabled": true,
+          "params": {
+            "blurriness": {
+              "keyframes": [
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "Linear",
+                  "out_influence": 0.3333333333333333,
+                  "time": 0,
+                  "value": {
+                    "Float": 40.0
+                  }
+                },
+                {
+                  "in_influence": 0.9,
+                  "interp": "EaseIn",
+                  "out_influence": 0.3333333333333333,
+                  "time": 177811200000,
+                  "value": {
+                    "Float": 0.0
+                  }
+                }
+              ],
+              "value": {
+                "Float": 40.0
+              }
+            },
+            "dimensions": {
+              "value": {
+                "Choice": 0
+              }
+            },
+            "repeat_edge": {
+              "value": {
+                "Bool": false
+              }
+            }
+          }
+        },
+        {
+          "effect": "transform",
+          "enabled": true,
+          "params": {
+            "anchor": {
+              "value": {
+                "Vec2": {
+                  "x": 960.0,
+                  "y": 540.0
+                }
+              }
+            },
+            "opacity": {
+              "keyframes": [
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "Linear",
+                  "out_influence": 0.3333333333333333,
+                  "time": 0,
+                  "value": {
+                    "Float": 0.0
+                  }
+                },
+                {
+                  "in_influence": 0.9,
+                  "interp": "EaseIn",
+                  "out_influence": 0.3333333333333333,
+                  "time": 177811200000,
+                  "value": {
+                    "Float": 100.0
+                  }
+                }
+              ],
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "position": {
+              "value": {
+                "Vec2": {
+                  "x": 960.0,
+                  "y": 540.0
+                }
+              }
+            },
+            "rotation": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "scale_height": {
+              "keyframes": [
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "Linear",
+                  "out_influence": 0.3333333333333333,
+                  "time": 0,
+                  "value": {
+                    "Float": 108.0
+                  }
+                },
+                {
+                  "in_influence": 0.9,
+                  "interp": "EaseIn",
+                  "out_influence": 0.3333333333333333,
+                  "time": 177811200000,
+                  "value": {
+                    "Float": 100.0
+                  }
+                }
+              ],
+              "value": {
+                "Float": 108.0
+              }
+            },
+            "scale_width": {
+              "value": {
+                "Float": 100.0
+              }
+            },
+            "shutter_angle": {
+              "value": {
+                "Float": 180.0
+              }
+            },
+            "shutter_override": {
+              "value": {
+                "Bool": false
+              }
+            },
+            "skew": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "skew_axis": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "uniform_scale": {
+              "value": {
+                "Bool": true
+              }
+            }
+          }
+        }
+      ],
+      "keyframes": "AnchorToIn",
+      "name": "Sk Smooth Blur In",
+      "source_duration": 1270080000000,
+      "source_size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "description": "Fondu doux",
+      "effects": [
+        {
+          "effect": "transform",
+          "enabled": true,
+          "params": {
+            "anchor": {
+              "value": {
+                "Vec2": {
+                  "x": 960.0,
+                  "y": 540.0
+                }
+              }
+            },
+            "opacity": {
+              "keyframes": [
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "Linear",
+                  "out_influence": 0.3333333333333333,
+                  "time": 0,
+                  "value": {
+                    "Float": 0.0
+                  }
+                },
+                {
+                  "in_influence": 0.9,
+                  "interp": "EaseIn",
+                  "out_influence": 0.3333333333333333,
+                  "time": 177811200000,
+                  "value": {
+                    "Float": 100.0
+                  }
+                }
+              ],
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "position": {
+              "value": {
+                "Vec2": {
+                  "x": 960.0,
+                  "y": 540.0
+                }
+              }
+            },
+            "rotation": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "scale_height": {
+              "value": {
+                "Float": 100.0
+              }
+            },
+            "scale_width": {
+              "value": {
+                "Float": 100.0
+              }
+            },
+            "shutter_angle": {
+              "value": {
+                "Float": 180.0
+              }
+            },
+            "shutter_override": {
+              "value": {
+                "Bool": false
+              }
+            },
+            "skew": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "skew_axis": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "uniform_scale": {
+              "value": {
+                "Bool": true
+              }
+            }
+          }
+        }
+      ],
+      "keyframes": "AnchorToIn",
+      "name": "Sk Smooth Fade In",
+      "source_duration": 1270080000000,
+      "source_size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "description": "Monte en apparaissant / continue de monter en disparaissant",
+      "effects": [
+        {
+          "effect": "transform",
+          "enabled": true,
+          "params": {
+            "anchor": {
+              "value": {
+                "Vec2": {
+                  "x": 960.0,
+                  "y": 540.0
+                }
+              }
+            },
+            "opacity": {
+              "keyframes": [
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "EaseOut",
+                  "out_influence": 0.9,
+                  "time": 1117670400000,
+                  "value": {
+                    "Float": 100.0
+                  }
+                },
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "Linear",
+                  "out_influence": 0.3333333333333333,
+                  "time": 1270080000000,
+                  "value": {
+                    "Float": 0.0
+                  }
+                }
+              ],
+              "value": {
+                "Float": 100.0
+              }
+            },
+            "position": {
+              "keyframes": [
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "EaseOut",
+                  "out_influence": 0.9,
+                  "time": 1117670400000,
+                  "value": {
+                    "Vec2": {
+                      "x": 960.0,
+                      "y": 540.0
+                    }
+                  }
+                },
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "Linear",
+                  "out_influence": 0.3333333333333333,
+                  "time": 1270080000000,
+                  "value": {
+                    "Vec2": {
+                      "x": 960.0,
+                      "y": 470.0
+                    }
+                  }
+                }
+              ],
+              "value": {
+                "Vec2": {
+                  "x": 960.0,
+                  "y": 540.0
+                }
+              }
+            },
+            "rotation": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "scale_height": {
+              "value": {
+                "Float": 100.0
+              }
+            },
+            "scale_width": {
+              "value": {
+                "Float": 100.0
+              }
+            },
+            "shutter_angle": {
+              "value": {
+                "Float": 180.0
+              }
+            },
+            "shutter_override": {
+              "value": {
+                "Bool": false
+              }
+            },
+            "skew": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "skew_axis": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "uniform_scale": {
+              "value": {
+                "Bool": true
+              }
+            }
+          }
+        }
+      ],
+      "keyframes": "AnchorToOut",
+      "name": "Sk Slide Up Out",
+      "source_duration": 1270080000000,
+      "source_size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "description": "Zoom doux avec fondu",
+      "effects": [
+        {
+          "effect": "transform",
+          "enabled": true,
+          "params": {
+            "anchor": {
+              "value": {
+                "Vec2": {
+                  "x": 960.0,
+                  "y": 540.0
+                }
+              }
+            },
+            "opacity": {
+              "keyframes": [
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "EaseOut",
+                  "out_influence": 0.9,
+                  "time": 1117670400000,
+                  "value": {
+                    "Float": 100.0
+                  }
+                },
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "Linear",
+                  "out_influence": 0.3333333333333333,
+                  "time": 1270080000000,
+                  "value": {
+                    "Float": 0.0
+                  }
+                }
+              ],
+              "value": {
+                "Float": 100.0
+              }
+            },
+            "position": {
+              "value": {
+                "Vec2": {
+                  "x": 960.0,
+                  "y": 540.0
+                }
+              }
+            },
+            "rotation": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "scale_height": {
+              "keyframes": [
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "EaseOut",
+                  "out_influence": 0.9,
+                  "time": 1117670400000,
+                  "value": {
+                    "Float": 100.0
+                  }
+                },
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "Linear",
+                  "out_influence": 0.3333333333333333,
+                  "time": 1270080000000,
+                  "value": {
+                    "Float": 120.0
+                  }
+                }
+              ],
+              "value": {
+                "Float": 100.0
+              }
+            },
+            "scale_width": {
+              "value": {
+                "Float": 100.0
+              }
+            },
+            "shutter_angle": {
+              "value": {
+                "Float": 180.0
+              }
+            },
+            "shutter_override": {
+              "value": {
+                "Bool": false
+              }
+            },
+            "skew": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "skew_axis": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "uniform_scale": {
+              "value": {
+                "Bool": true
+              }
+            }
+          }
+        }
+      ],
+      "keyframes": "AnchorToOut",
+      "name": "Sk Smooth Zoom Out",
+      "source_duration": 1270080000000,
+      "source_size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "description": "Sort du flou / retourne dans le flou",
+      "effects": [
+        {
+          "effect": "gaussian_blur",
+          "enabled": true,
+          "params": {
+            "blurriness": {
+              "keyframes": [
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "EaseOut",
+                  "out_influence": 0.9,
+                  "time": 1117670400000,
+                  "value": {
+                    "Float": 0.0
+                  }
+                },
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "Linear",
+                  "out_influence": 0.3333333333333333,
+                  "time": 1270080000000,
+                  "value": {
+                    "Float": 40.0
+                  }
+                }
+              ],
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "dimensions": {
+              "value": {
+                "Choice": 0
+              }
+            },
+            "repeat_edge": {
+              "value": {
+                "Bool": false
+              }
+            }
+          }
+        },
+        {
+          "effect": "transform",
+          "enabled": true,
+          "params": {
+            "anchor": {
+              "value": {
+                "Vec2": {
+                  "x": 960.0,
+                  "y": 540.0
+                }
+              }
+            },
+            "opacity": {
+              "keyframes": [
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "EaseOut",
+                  "out_influence": 0.9,
+                  "time": 1117670400000,
+                  "value": {
+                    "Float": 100.0
+                  }
+                },
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "Linear",
+                  "out_influence": 0.3333333333333333,
+                  "time": 1270080000000,
+                  "value": {
+                    "Float": 0.0
+                  }
+                }
+              ],
+              "value": {
+                "Float": 100.0
+              }
+            },
+            "position": {
+              "value": {
+                "Vec2": {
+                  "x": 960.0,
+                  "y": 540.0
+                }
+              }
+            },
+            "rotation": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "scale_height": {
+              "keyframes": [
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "EaseOut",
+                  "out_influence": 0.9,
+                  "time": 1117670400000,
+                  "value": {
+                    "Float": 100.0
+                  }
+                },
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "Linear",
+                  "out_influence": 0.3333333333333333,
+                  "time": 1270080000000,
+                  "value": {
+                    "Float": 108.0
+                  }
+                }
+              ],
+              "value": {
+                "Float": 100.0
+              }
+            },
+            "scale_width": {
+              "value": {
+                "Float": 100.0
+              }
+            },
+            "shutter_angle": {
+              "value": {
+                "Float": 180.0
+              }
+            },
+            "shutter_override": {
+              "value": {
+                "Bool": false
+              }
+            },
+            "skew": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "skew_axis": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "uniform_scale": {
+              "value": {
+                "Bool": true
+              }
+            }
+          }
+        }
+      ],
+      "keyframes": "AnchorToOut",
+      "name": "Sk Smooth Blur Out",
+      "source_duration": 1270080000000,
+      "source_size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "description": "Fondu doux",
+      "effects": [
+        {
+          "effect": "transform",
+          "enabled": true,
+          "params": {
+            "anchor": {
+              "value": {
+                "Vec2": {
+                  "x": 960.0,
+                  "y": 540.0
+                }
+              }
+            },
+            "opacity": {
+              "keyframes": [
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "EaseOut",
+                  "out_influence": 0.9,
+                  "time": 1117670400000,
+                  "value": {
+                    "Float": 100.0
+                  }
+                },
+                {
+                  "in_influence": 0.3333333333333333,
+                  "interp": "Linear",
+                  "out_influence": 0.3333333333333333,
+                  "time": 1270080000000,
+                  "value": {
+                    "Float": 0.0
+                  }
+                }
+              ],
+              "value": {
+                "Float": 100.0
+              }
+            },
+            "position": {
+              "value": {
+                "Vec2": {
+                  "x": 960.0,
+                  "y": 540.0
+                }
+              }
+            },
+            "rotation": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "scale_height": {
+              "value": {
+                "Float": 100.0
+              }
+            },
+            "scale_width": {
+              "value": {
+                "Float": 100.0
+              }
+            },
+            "shutter_angle": {
+              "value": {
+                "Float": 180.0
+              }
+            },
+            "shutter_override": {
+              "value": {
+                "Bool": false
+              }
+            },
+            "skew": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "skew_axis": {
+              "value": {
+                "Float": 0.0
+              }
+            },
+            "uniform_scale": {
+              "value": {
+                "Bool": true
+              }
+            }
+          }
+        }
+      ],
+      "keyframes": "AnchorToOut",
+      "name": "Sk Smooth Fade Out",
+      "source_duration": 1270080000000,
+      "source_size": [
+        1920,
+        1080
+      ]
+    }
+  ],
+  "version": 1
+}
